@@ -19,7 +19,8 @@ Without Supabase environment variables, the app opens in a local demo mode. Neve
 ## Current foundation
 - Responsive messenger interface
 - Supabase email/password sign-in and registration
-- Profiles, username search, conversation, membership and message schema\n- Stars ledger, gift catalog and inventory, collectible usernames, audit-log foundation
+- Profiles, username search, conversation, membership and message schema
+- Stars ledger, gift catalog and inventory, collectible usernames, audit-log foundation
 - RLS-protected data and realtime message subscription
 
 ## Next milestones
