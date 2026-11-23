@@ -23,8 +23,7 @@ Without Supabase environment variables, the app opens in a local demo mode. Neve
 - RLS-protected data and realtime message subscription
 
 ## Next milestones
-- Persisted conversation list and membership management
-- Direct messages, group invites and channels
-- Contacts, search and profile editing
+- Group invitations, channel publishing and contact-request UI
+- Message attachments, reactions, and media handling
 - Stars, gifts and collectible usernames
 - Server-side moderation and a protected admin console
