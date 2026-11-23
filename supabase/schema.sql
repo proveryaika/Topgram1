@@ -160,3 +160,22 @@ create policy "TopGram admins can read audit logs" on public.tg_audit_logs for s
   coalesce((select auth.jwt()) -> 'app_metadata' ->> 'role', '') in ('owner','admin')
 );
 grant select on public.tg_audit_logs to authenticated;
+
+-- Contact requests with separate recipient and requester transitions.
+create table if not exists public.tg_contact_requests (
+  id uuid primary key default gen_random_uuid(),
+  requester_id uuid not null references auth.users(id) on delete cascade,
+  recipient_id uuid not null references auth.users(id) on delete cascade,
+  status text not null default 'pending' check (status in ('pending','accepted','rejected','cancelled')),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  constraint tg_contact_request_not_self check (requester_id <> recipient_id),
+  constraint tg_contact_request_unique_pair unique (requester_id, recipient_id)
+);
+create index if not exists tg_contact_requests_recipient_status_idx on public.tg_contact_requests(recipient_id,status,created_at desc);
+alter table public.tg_contact_requests enable row level security;
+create policy "Users can view contact requests involving them" on public.tg_contact_requests for select to authenticated using (requester_id = (select auth.uid()) or recipient_id = (select auth.uid()));
+create policy "Users can send contact requests" on public.tg_contact_requests for insert to authenticated with check (requester_id = (select auth.uid()) and recipient_id <> (select auth.uid()) and status = 'pending');
+create policy "Recipients can accept or reject requests" on public.tg_contact_requests for update to authenticated using (recipient_id = (select auth.uid()) and status = 'pending') with check (recipient_id = (select auth.uid()) and status in ('accepted','rejected'));
+create policy "Requesters can cancel their pending requests" on public.tg_contact_requests for update to authenticated using (requester_id = (select auth.uid()) and status = 'pending') with check (requester_id = (select auth.uid()) and status = 'cancelled');
+grant select, insert, update on public.tg_contact_requests to authenticated;
