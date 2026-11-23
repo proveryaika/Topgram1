@@ -15,3 +15,12 @@
 .feature-button{width:100%;border:0;background:transparent;text-align:left;font:inherit;cursor:pointer;border-radius:10px}
 .feature-button:hover{background:#1c2b3d}
 .modal-textarea{height:86px;padding:11px 12px;resize:vertical}
+
+.icon-btn:disabled{opacity:.38;cursor:not-allowed}
+.icon-btn:disabled:hover{background:transparent;color:#8fa0b7}
+.create-choice{width:100%;display:flex;align-items:center;gap:13px;padding:13px 12px;margin:6px 0;border:1px solid #2d4058;border-radius:12px;background:#142236;color:#dce5f1;text-align:left}
+.create-choice:hover{background:#20324a;border-color:#465b82}
+.create-choice>svg{width:21px;height:21px;color:#98a6ff;flex:none}
+.create-choice span{display:flex;flex-direction:column;gap:4px}
+.create-choice b{font-size:12px}
+.create-choice small{font-size:10px;color:#8d9db3}
