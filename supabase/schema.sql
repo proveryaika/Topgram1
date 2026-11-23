@@ -110,3 +110,53 @@ grant select, insert, update on public.tg_profiles to authenticated;
 grant select, insert on public.tg_conversations to authenticated;
 grant select, insert on public.tg_conversation_members to authenticated;
 grant select, insert on public.tg_messages to authenticated;
+
+
+-- Stars, gifts, collectible usernames and moderation audit foundation.
+create table if not exists public.tg_star_ledger (
+  id uuid primary key default gen_random_uuid(), user_id uuid not null references auth.users(id) on delete cascade,
+  amount integer not null check (amount <> 0), reason text not null, reference_id uuid, created_at timestamptz not null default now()
+);
+create index if not exists tg_star_ledger_user_created_idx on public.tg_star_ledger(user_id, created_at desc);
+alter table public.tg_star_ledger enable row level security;
+create policy "Users can view their own star history" on public.tg_star_ledger for select to authenticated using (user_id = (select auth.uid()));
+grant select on public.tg_star_ledger to authenticated;
+
+create table if not exists public.tg_gift_catalog (
+  id uuid primary key default gen_random_uuid(), code text not null unique, title text not null, description text not null default '',
+  image_url text, stars_price integer not null check (stars_price >= 0), limited_quantity integer check (limited_quantity is null or limited_quantity > 0),
+  is_active boolean not null default true, created_at timestamptz not null default now()
+);
+alter table public.tg_gift_catalog enable row level security;
+create policy "Authenticated users can view active gifts" on public.tg_gift_catalog for select to authenticated using (is_active = true);
+grant select on public.tg_gift_catalog to authenticated;
+
+create table if not exists public.tg_gift_drops (
+  id uuid primary key default gen_random_uuid(), gift_id uuid not null references public.tg_gift_catalog(id),
+  user_id uuid not null references auth.users(id) on delete cascade, quantity integer not null default 1 check (quantity > 0),
+  note text not null default '', created_at timestamptz not null default now()
+);
+create index if not exists tg_gift_drops_user_created_idx on public.tg_gift_drops(user_id, created_at desc);
+alter table public.tg_gift_drops enable row level security;
+create policy "Users can view gifts they received" on public.tg_gift_drops for select to authenticated using (user_id = (select auth.uid()));
+grant select on public.tg_gift_drops to authenticated;
+
+create table if not exists public.tg_collectible_usernames (
+  id uuid primary key default gen_random_uuid(), username text not null unique check (username ~ '^[a-zA-Z0-9_]{4,32}$'),
+  owner_id uuid references auth.users(id) on delete set null, acquired_at timestamptz, expires_at timestamptz, created_at timestamptz not null default now()
+);
+alter table public.tg_collectible_usernames enable row level security;
+create policy "Authenticated users can browse collectible usernames" on public.tg_collectible_usernames for select to authenticated using (true);
+grant select on public.tg_collectible_usernames to authenticated;
+
+create table if not exists public.tg_audit_logs (
+  id uuid primary key default gen_random_uuid(), actor_id uuid references auth.users(id) on delete set null,
+  action text not null, target_user_id uuid references auth.users(id) on delete set null,
+  details jsonb not null default '{}'::jsonb, created_at timestamptz not null default now()
+);
+create index if not exists tg_audit_logs_created_idx on public.tg_audit_logs(created_at desc);
+alter table public.tg_audit_logs enable row level security;
+create policy "TopGram admins can read audit logs" on public.tg_audit_logs for select to authenticated using (
+  coalesce((select auth.jwt()) -> 'app_metadata' ->> 'role', '') in ('owner','admin')
+);
+grant select on public.tg_audit_logs to authenticated;
