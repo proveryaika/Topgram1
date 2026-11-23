@@ -56,12 +56,12 @@ language sql
 stable
 security definer
 set search_path = ''
-as $
+as $func$
   select p_user_id = (select auth.uid()) and exists (
     select 1 from public.tg_conversation_members m
     where m.conversation_id = p_conversation_id and m.user_id = p_user_id
   );
-$;
+$func$;
 revoke all on function private.is_conversation_member(uuid, uuid) from public, anon;
 grant execute on function private.is_conversation_member(uuid, uuid) to authenticated;
 
