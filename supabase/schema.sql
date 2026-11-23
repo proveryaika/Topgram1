@@ -39,6 +39,7 @@ create table if not exists public.tg_messages (
 
 create index if not exists tg_messages_conversation_created_idx on public.tg_messages(conversation_id,created_at desc);
 create index if not exists tg_members_user_idx on public.tg_conversation_members(user_id);
+create unique index if not exists tg_profiles_username_ci_idx on public.tg_profiles (lower(username)) where username is not null;
 
 alter table public.tg_profiles enable row level security;
 alter table public.tg_conversations enable row level security;
@@ -56,12 +57,12 @@ stable
 security definer
 set search_path = ''
 as $
-  select exists (
+  select p_user_id = (select auth.uid()) and exists (
     select 1 from public.tg_conversation_members m
     where m.conversation_id = p_conversation_id and m.user_id = p_user_id
   );
 $;
-revoke all on function private.is_conversation_member(uuid, uuid) from public;
+revoke all on function private.is_conversation_member(uuid, uuid) from public, anon;
 grant execute on function private.is_conversation_member(uuid, uuid) to authenticated;
 
 create policy "Profiles visible to authenticated users" on public.tg_profiles for select to authenticated using (true);
