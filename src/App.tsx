@@ -9,6 +9,19 @@ type Chat = { id: string; name: string; handle: string; preview: string; time: s
 type Message = { id: string; chatId: string; text: string; mine: boolean; time: string };
 const palette = ["#6879df", "#399b8d", "#c27a53", "#9569bf", "#477eaa", "#b66d88"];
 const timeLabel = (value?: string) => value ? new Date(value).toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"}) : "";
+let anonymousSignInPromise: Promise<User> | null = null;
+async function createAnonymousAccount(): Promise<User> {
+ if(!supabase) throw new Error("Supabase не подключён.");
+ if(!anonymousSignInPromise) {
+  anonymousSignInPromise=supabase.auth.signInAnonymously({options:{data:{display_name:"Пользователь"}}}).then(({data,error})=>{
+   if(error) throw error;
+   if(!data.user) throw new Error("Supabase не вернул аккаунт.");
+   return data.user;
+  }).finally(()=>{anonymousSignInPromise=null;});
+ }
+ return anonymousSignInPromise;
+}
+
 function Avatar({chat,size="normal"}:{chat:Chat;size?:"normal"|"small"}) { return <div className={`avatar ${size}`} style={{background:chat.color}}>{chat.kind==="channel" ? <Radio/> : chat.kind==="group" ? <Users/> : chat.name.slice(0,1).toUpperCase()}{chat.online&&<i/>}</div>; }
 
 export default function App() {
@@ -20,7 +33,7 @@ export default function App() {
  const active=chats.find(c=>c.id===activeId)??chats[0];
  const visible=useMemo(()=>chats.filter(c=>(tab==="Все"||(tab==="Личные"&&c.kind==="direct")||(tab==="Группы"&&c.kind==="group")||(tab==="Каналы"&&c.kind==="channel"))&&(c.name.toLowerCase().includes(query.toLowerCase())||c.handle.toLowerCase().includes(query.toLowerCase()))),[chats,query,tab]);
 
- useEffect(()=>{if(!supabase){setAuthReady(true);return;}let alive=true;const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,session)=>{if(alive)setUser(session?.user??null);});(async()=>{const {data,error}=await supabase.auth.getSession();if(error)throw error;if(data.session){if(alive)setUser(data.session.user);}else{const {data:created,error:createError}=await supabase.auth.signInAnonymously({options:{data:{display_name:"Пользователь"}}});if(createError)throw createError;if(alive)setUser(created.user);}})().catch(error=>{if(alive)setAuthError(error instanceof Error?error.message:"Не удалось создать аккаунт.");}).finally(()=>{if(alive)setAuthReady(true);});return()=>{alive=false;subscription.unsubscribe();};},[]);
+ useEffect(()=>{if(!supabase){setAuthReady(true);return;}let alive=true;const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,session)=>{if(alive)setUser(session?.user??null);});(async()=>{const {data,error}=await supabase.auth.getSession();if(error)throw error;if(data.session){if(alive)setUser(data.session.user);}else{const created=await createAnonymousAccount();if(alive)setUser(created);}})().catch(error=>{if(alive)setAuthError(error instanceof Error?error.message:"Не удалось создать аккаунт.");}).finally(()=>{if(alive)setAuthReady(true);});return()=>{alive=false;subscription.unsubscribe();};},[]);
 
  async function loadWorkspace(current:User) {
   if(!supabase)return;
