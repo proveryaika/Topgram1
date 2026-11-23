@@ -45,23 +45,42 @@ alter table public.tg_conversations enable row level security;
 alter table public.tg_conversation_members enable row level security;
 alter table public.tg_messages enable row level security;
 
+-- Private helper avoids recursive RLS when checking conversation membership.
+create schema if not exists private;
+revoke all on schema private from public;
+grant usage on schema private to authenticated;
+create or replace function private.is_conversation_member(p_conversation_id uuid, p_user_id uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $
+  select exists (
+    select 1 from public.tg_conversation_members m
+    where m.conversation_id = p_conversation_id and m.user_id = p_user_id
+  );
+$;
+revoke all on function private.is_conversation_member(uuid, uuid) from public;
+grant execute on function private.is_conversation_member(uuid, uuid) to authenticated;
+
 create policy "Profiles visible to authenticated users" on public.tg_profiles for select to authenticated using (true);
 create policy "Users create own profile" on public.tg_profiles for insert to authenticated with check (id = (select auth.uid()));
 create policy "Users update own profile" on public.tg_profiles for update to authenticated using (id = (select auth.uid())) with check (id = (select auth.uid()));
 
 create policy "Members can view conversations" on public.tg_conversations for select to authenticated
-using (exists (select 1 from public.tg_conversation_members m where m.conversation_id=id and m.user_id=(select auth.uid())));
+using (private.is_conversation_member(id, (select auth.uid())));
 create policy "Authenticated users create conversations" on public.tg_conversations for insert to authenticated with check (created_by=(select auth.uid()));
 
 create policy "Members can view membership" on public.tg_conversation_members for select to authenticated
-using (exists (select 1 from public.tg_conversation_members m where m.conversation_id=conversation_id and m.user_id=(select auth.uid())));
+using (private.is_conversation_member(tg_conversation_members.conversation_id, (select auth.uid())));
 create policy "Conversation creator adds first members" on public.tg_conversation_members for insert to authenticated
-with check (user_id=(select auth.uid()) or exists (select 1 from public.tg_conversations c where c.id=conversation_id and c.created_by=(select auth.uid())));
+with check (exists (select 1 from public.tg_conversations c where c.id=tg_conversation_members.conversation_id and c.created_by=(select auth.uid())));
 
 create policy "Members can read messages" on public.tg_messages for select to authenticated
-using (exists (select 1 from public.tg_conversation_members m where m.conversation_id=tg_messages.conversation_id and m.user_id=(select auth.uid())));
+using (private.is_conversation_member(tg_messages.conversation_id, (select auth.uid())));
 create policy "Members can send messages as themselves" on public.tg_messages for insert to authenticated
-with check (sender_id=(select auth.uid()) and exists (select 1 from public.tg_conversation_members m where m.conversation_id=tg_messages.conversation_id and m.user_id=(select auth.uid())));
+with check (sender_id=(select auth.uid()) and private.is_conversation_member(tg_messages.conversation_id, (select auth.uid())));
 
 -- Create a profile automatically when a new Auth user registers.
 create or replace function public.tg_handle_new_user()
