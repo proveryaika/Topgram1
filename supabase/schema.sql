@@ -83,7 +83,7 @@ create policy "Members can send messages as themselves" on public.tg_messages fo
 with check (sender_id=(select auth.uid()) and private.is_conversation_member(tg_messages.conversation_id, (select auth.uid())));
 
 -- Create a profile automatically when a new Auth user registers.
-create or replace function public.tg_handle_new_user()
+create or replace function private.tg_handle_new_user()
 returns trigger language plpgsql security definer set search_path = ''
 as $$
 begin
@@ -93,10 +93,10 @@ begin
   return new;
 end;
 $$;
-revoke all on function public.tg_handle_new_user() from public;
+revoke all on function private.tg_handle_new_user() from public, anon, authenticated;
 drop trigger if exists tg_on_auth_user_created on auth.users;
 create trigger tg_on_auth_user_created after insert on auth.users
-for each row execute procedure public.tg_handle_new_user();
+for each row execute procedure private.tg_handle_new_user();
 
 -- Realtime publication for messages (safe if already present).
 do $$
