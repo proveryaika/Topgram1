@@ -48,13 +48,13 @@ export default function App() {
   ]);
   if(convError||msgError||allMembersError){console.error(convError??msgError??allMembersError);return;}
   const others=[...new Set((allMembers??[]).filter((m:{user_id:string})=>m.user_id!==current.id).map((m:{user_id:string})=>m.user_id))];
-  const {data:profiles}=others.length?await supabase.from("tg_profiles").select("id,username,display_name").in("id",others):{data:[] as {id:string;username:string|null;display_name:string}[]};
-  const profileMap=new Map((profiles??[]).map((p:{id:string;username:string|null;display_name:string})=>[p.id,p]));
+  const {data:profiles}=others.length?await supabase.from("tg_profiles").select("id,username,display_name,is_bot").in("id",others):{data:[] as {id:string;username:string|null;display_name:string}[]};
+  const profileMap=new Map((profiles??[]).map((p:{id:string;username:string|null;display_name:string;is_bot:boolean})=>[p.id,p]));
   const memberMap=new Map<string,string[]>();
   (allMembers??[]).forEach((m:{conversation_id:string;user_id:string})=>memberMap.set(m.conversation_id,[...(memberMap.get(m.conversation_id)??[]),m.user_id]));
   const lastMap=new Map<string,{body:string;created_at:string}>();
   (allMessages??[]).forEach((m:{conversation_id:string;body:string;created_at:string})=>lastMap.set(m.conversation_id,{body:m.body,created_at:m.created_at}));
-  const mapped:Chat[]=(conversations??[]).map((c:{id:string;kind:Kind;title:string|null;created_at:string},i:number)=>{
+  const mapped:Chat[]=(conversations??[]).filter((c:{id:string;kind:Kind})=>{if(c.kind!=="direct")return true;const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id);const other=otherId?profileMap.get(otherId):null;return Boolean(other&&!other.is_bot&&lastMap.has(c.id));}).map((c:{id:string;kind:Kind;title:string|null;created_at:string},i:number)=>{
    const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id); const profile=otherId?profileMap.get(otherId):null;
    const name=c.kind==="direct"?(profile?.display_name??"Новый контакт"):(c.title??(c.kind==="channel"?"Канал без названия":"Группа без названия"));
    const last=lastMap.get(c.id);
