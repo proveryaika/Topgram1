@@ -36,7 +36,7 @@ export default function App() {
   ]);
   if(convError||msgError||allMembersError){console.error(convError??msgError??allMembersError);return;}
   const others=[...new Set((allMembers??[]).filter((m:{user_id:string})=>m.user_id!==current.id).map((m:{user_id:string})=>m.user_id))];
-  const {data:profiles}=others.length?await supabase.from("tg_profiles").select("id,username,display_name,is_bot").in("id",others):{data:[] as {id:string;username:string|null;display_name:string}[]};
+  const {data:profiles}=others.length?await supabase.from("tg_profiles").select("id,username,display_name,is_bot").in("id",others):{data:[] as {id:string;username:string|null;display_name:string;is_bot:boolean}[]};
   const profileMap=new Map((profiles??[]).map((p:{id:string;username:string|null;display_name:string;is_bot?:boolean})=>[p.id,{...p,is_bot:Boolean(p.is_bot)}]));
   const memberMap=new Map<string,string[]>();
   (allMembers??[]).forEach((m:{conversation_id:string;user_id:string})=>memberMap.set(m.conversation_id,[...(memberMap.get(m.conversation_id)??[]),m.user_id]));
