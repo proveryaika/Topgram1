@@ -156,6 +156,7 @@ export default function App() {
    <div className="tg-profile-name">{profileName||"Пользователь"}</div>
    <div className="tg-profile-online"><i/> в сети</div>
    <div className="tg-profile-actions">
+    <button disabled title="Добавление фото профиля пока не поддерживается"><Camera/><span>Фото профиля</span></button>
     <button onClick={()=>{setActionError("");setSettingsSection("account");setAccountEditField(null);setMobileTab("settings");}}><Pencil/><span>Изменить</span></button>
     <button onClick={()=>{setMobileTab("settings");setSettingsSection("home");setAccountEditField(null);}}><Settings/><span>Настройки</span></button>
    </div>
