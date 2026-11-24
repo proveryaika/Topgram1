@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { FormEvent } from "react";
-import { Search, Plus, Send, Paperclip, Smile, MoreVertical, Phone, Video, ArrowLeft, MessageCircle, Users, Bookmark, Settings, Star, Gift, CheckCheck, X, Radio, LoaderCircle, ShieldCheck, Shield, AlertCircle, CheckCircle, History, RefreshCw, BadgeCheck, Pencil, Trash2, Check, Timer, LockKeyhole, KeyRound, Mail, Hand, MonitorSmartphone } from "lucide-react";
+import { Search, Plus, Send, Paperclip, Smile, MoreVertical, Phone, Video, ArrowLeft, MessageCircle, Users, Bookmark, Settings, Star, Gift, CheckCheck, X, Radio, LoaderCircle, ShieldCheck, Shield, AlertCircle, CheckCircle, History, RefreshCw, BadgeCheck, Pencil, Trash2, Check, Copy, Camera, Timer, LockKeyhole, KeyRound, Mail, Hand, MonitorSmartphone } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { isSupabaseConfigured, supabase } from "./lib/supabase";
 
@@ -161,7 +161,7 @@ export default function App() {
    </div>
   </div>
   <div className="tg-profile-info-card">
-   <div className="tg-profile-info-row"><span><small>Номер TopGram</small><b>{topgramId||"Загружается…"}</b></span><button className="tg-copy-id" aria-label="Скопировать номер" onClick={()=>{if(topgramId)void navigator.clipboard?.writeText(topgramId);}}><icon/></button></div>
+   <div className="tg-profile-info-row"><span><small>Номер TopGram</small><b>{topgramId||"Загружается…"}</b></span><button className="tg-copy-id" aria-label="Скопировать номер" onClick={()=>{if(topgramId)void navigator.clipboard?.writeText(topgramId);}}><Copy/></button></div>
    <button className="tg-profile-info-row" onClick={()=>openAccountEditor("bio")}><span><small>О себе</small><b>{profileBio||"Добавить информацию о себе"}</b></span><Pencil/></button>
    <button className="tg-profile-info-row" onClick={()=>openAccountEditor("username")}><span><small>Имя пользователя</small><b>{profileUsername?"@"+profileUsername:"Добавить имя пользователя"}</b></span><Pencil/></button>
    <button className="tg-profile-info-row" onClick={()=>openAccountEditor("name")}><span><small>Имя</small><b>{profileName||"Добавить имя"}</b></span><Pencil/></button>
