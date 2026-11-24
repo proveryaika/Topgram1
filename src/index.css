@@ -408,3 +408,56 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .admin-gift-state{padding:7px 9px;border:1px solid #62424a;border-radius:9px;background:#382a30;color:#ffbdc4;font-size:10px;font-weight:650}
 .admin-gift-state.active{border-color:#315a50;background:#203c35;color:#8ce0bc}
 @media(max-width:650px){.admin-gift-numbers{grid-template-columns:1fr 1fr}.admin-gift-numbers label:last-child{grid-column:1/-1}.admin-gift-row{gap:8px}.admin-gift-state{padding:7px 6px;font-size:9px}}
+
+
+/* TopGram mobile refresh and verified service conversation */
+.verified-label{display:inline-block;vertical-align:middle;margin-left:5px;color:#55b8f5;fill:#55b8f5;stroke:#fff;stroke-width:2.5}
+.chat-title .verified-label{margin-left:5px;flex:none}
+.system-notice-message{align-self:center;display:flex;flex-direction:column;align-items:center;gap:10px;width:min(360px,90%);margin:auto;padding:26px 22px;border:1px solid #30475d;border-radius:22px;background:#202e3d;text-align:center;box-shadow:0 12px 35px #0002}
+.system-notice-badge{width:58px;height:58px;display:grid;place-items:center;border-radius:50%;background:#3390ec;color:#fff}
+.system-notice-badge svg{width:32px;height:32px;stroke-width:2.5}
+.system-notice-message>b{font-size:16px}
+.system-notice-message p{margin:0;color:#d5e0eb;font-size:14px;line-height:1.5}
+.system-notice-message small{color:#8fa2b5;font-size:11px}
+@media(max-width:650px){
+ .app-shell{background:#1d2935}
+ .sidebar{background:#1d2935}
+ .side-header{height:76px;padding:0 20px}
+ .brand{font-size:25px}
+ .brand-mark.small-mark{display:none}
+ .brand>span{font-size:25px}
+ .search-box{margin:8px 16px 12px;height:46px;background:#263646;border-color:#304355}
+ .filters{padding:0 16px 10px;border-color:#2b3947}
+ .filters button{font-size:12px;padding:8px 13px}
+ .chat-list{padding:7px 12px 16px}
+ .chat-row{min-height:82px;padding:12px 9px}
+ .chat-row.active{background:#263b50}
+ .avatar{width:54px;height:54px;border-radius:50%}
+ .chat-title{font-size:15px}
+ .chat-preview{font-size:13px}
+ .chat-meta{font-size:11px}
+ .mobile-bottom-nav{left:22px;right:22px;bottom:calc(12px + env(safe-area-inset-bottom));height:78px;padding:6px;border-radius:40px;background:#202f40;border-color:#2c3d50}
+ .mobile-bottom-nav button{font-size:12px;gap:5px}
+ .mobile-bottom-nav svg{width:27px;height:27px}
+ .mobile-bottom-nav button.active{background:#263f56;color:#58b8f5}
+ .mobile-top-actions{height:72px;font-size:21px;justify-content:center;position:relative}
+ .mobile-top-actions .icon-btn:first-child{position:absolute;left:0}
+ .mobile-top-actions .icon-btn:last-child{position:absolute;right:0}
+ .mobile-settings-screen,.mobile-contacts-screen{padding:0 14px 112px}
+ .mobile-settings-card{margin:9px 0 16px;padding:5px 0;border-radius:24px;background:#202e3d}
+ .mobile-settings-card button{min-height:88px;padding:15px 17px;gap:16px}
+ .mobile-settings-card b{font-size:18px}
+ .mobile-settings-card small{font-size:13px;line-height:1.35}
+ .settings-icon{width:48px;height:48px;border-radius:15px}
+ .mobile-profile-hero{padding:18px 18px 112px}
+ .mobile-profile-avatar{width:136px;height:136px}
+ .mobile-profile-actions{grid-template-columns:repeat(3,1fr)}
+ .mobile-profile-actions button{min-height:88px;padding:12px 7px;font-size:13px}
+ .mobile-profile-id{padding:22px;border-radius:22px;background:#202e3d}
+ .mobile-profile-id b{font-size:20px}
+ .mobile-profile-id small{font-size:14px}
+ .mobile-profile-empty{margin-top:70px}
+ .mobile-profile-empty b{font-size:23px}
+ .mobile-profile-empty span{font-size:16px}
+ .system-notice-message{border-radius:20px}
+}
