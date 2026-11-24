@@ -539,3 +539,10 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .message-edit-form textarea{width:100%;min-height:64px;max-height:180px;resize:vertical;border:1px solid #5689b3;border-radius:9px;padding:8px;background:#101a24;color:#e9edef;font:inherit;font-size:14px;outline:none}
 .message-edit-actions{display:flex;justify-content:flex-end;gap:5px}
 @media(max-width:650px){.message-tools{opacity:1}.message-edit-form{min-width:min(260px,70vw)}}
+
+
+/* Match Telegram-style security icons in privacy settings */
+.privacy-symbol{display:flex;align-items:center;justify-content:center;width:34px;height:36px;color:#8293a2}
+.privacy-symbol svg{width:29px;height:29px;stroke-width:1.8;fill:none}
+.privacy-row:focus-visible,.privacy-option:focus-visible{outline:2px solid #78bdf1;outline-offset:-2px}
+.privacy-value{white-space:nowrap}
