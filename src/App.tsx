@@ -57,8 +57,8 @@ export default function App() {
   const profileMap=new Map((profiles??[]).map((p:{id:string;username:string|null;display_name:string;is_bot?:boolean})=>[p.id,{...p,is_bot:Boolean(p.is_bot)}]));
   const memberMap=new Map<string,string[]>();
   (allMembers??[]).forEach((m:{conversation_id:string;user_id:string})=>memberMap.set(m.conversation_id,[...(memberMap.get(m.conversation_id)??[]),m.user_id]));
-  const lastMap=new Map<string,{body:string;created_at:string}>();
-  (allMessages??[]).forEach((m:{conversation_id:string;body:string;created_at:string})=>lastMap.set(m.conversation_id,{body:m.body,created_at:m.created_at}));
+  const lastMap=new Map<string,{body:string;created_at:string;attachment_name?:string|null}>();
+  (allMessages??[]).forEach((m:{conversation_id:string;body:string;created_at:string;attachment_name?:string|null})=>lastMap.set(m.conversation_id,{body:m.body,created_at:m.created_at,attachment_name:m.attachment_name}));
   const mapped:Chat[]=(conversations??[]).filter((c:{id:string;kind:Kind})=>{if(c.kind!=="direct")return true;const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id);const other=otherId?profileMap.get(otherId):null;return Boolean(other&&!other.is_bot&&!blockedIds.has(otherId!)&&lastMap.has(c.id));}).map((c:{id:string;kind:Kind;title:string|null;created_at:string},i:number)=>{
    const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id); const profile=otherId?profileMap.get(otherId):null;
    const name=c.kind==="direct"?(profile?.display_name??"Новый контакт"):(c.title??(c.kind==="channel"?"Канал без названия":"Группа без названия"));
