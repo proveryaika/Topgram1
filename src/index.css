@@ -966,3 +966,44 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 :root[data-theme="light"] .tg-profile-row{color:#18212b;border-color:#edf0f3}
 :root[data-theme="light"] .tg-profile-row small,:root[data-theme="light"] .tg-profile-online{color:#71808c}
 :root[data-theme="light"] .tg-profile-name,:root[data-theme="light"] .tg-profile-bio{color:#18212b}
+
+
+/* Telegram profile screen: centered identity, action pills, info card and posts tabs */
+.mobile-profile-screen{padding:0 0 calc(100px + env(safe-area-inset-bottom));background:var(--app-bg,#17212b);overflow-y:auto}
+.tg-profile-topbar{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 12px}
+.tg-profile-topbar>div{display:flex;align-items:center;gap:2px}
+.tg-qr-mark{font-size:23px;line-height:1}
+.tg-profile-identity{padding:20px 16px 18px}
+.tg-profile-avatar-wrap{width:104px;height:104px;margin-bottom:13px}
+.tg-profile-identity .mobile-profile-avatar{width:104px;height:104px;margin:0;border-radius:50%;font-size:42px}
+.tg-profile-name{font-size:22px;font-weight:650;letter-spacing:-.25px}
+.tg-profile-online{margin-top:4px;font-size:14px}
+.tg-profile-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:min(100%,460px);margin:22px auto 0}
+.tg-profile-actions button{min-height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:0;border-radius:14px;background:rgba(87,157,218,.16);color:#65b8f4;font-size:12px;font-weight:600}
+.tg-profile-actions button svg{width:21px;height:21px}
+.tg-profile-actions button:active{background:rgba(87,157,218,.27)}
+.tg-profile-actions button:disabled{opacity:.42;cursor:not-allowed}
+.tg-profile-info-card{width:calc(100% - 28px);max-width:560px;margin:0 auto 18px;overflow:hidden;border:1px solid var(--line,#34424f);border-radius:15px;background:var(--panel-bg,#202c38)}
+.tg-profile-info-row{width:100%;min-height:65px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border:0;border-bottom:1px solid var(--line,#34424f);background:transparent;color:var(--text,#e9edef);text-align:left}
+.tg-profile-info-row:last-child{border-bottom:0}
+.tg-profile-info-row>span{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px}
+.tg-profile-info-row small{font-size:12px;color:#8fa1af}
+.tg-profile-info-row b{font-size:15px;font-weight:500;line-height:1.35;overflow-wrap:anywhere}
+.tg-profile-info-row>svg,.tg-profile-info-row>button svg{width:18px;height:18px;flex:none;color:#8fa1af}
+.tg-profile-info-row button{padding:7px;border:0;background:transparent;color:inherit}
+.tg-profile-tabs{display:flex;justify-content:center;gap:34px;width:100%;border-bottom:1px solid var(--line,#34424f)}
+.tg-profile-tabs button{position:relative;min-height:48px;padding:0 8px;border:0;background:transparent;color:#8fa1af;font-size:14px;font-weight:600}
+.tg-profile-tabs button.active{color:#65b8f4}
+.tg-profile-tabs button.active:after{position:absolute;right:0;bottom:-1px;left:0;height:2px;border-radius:2px;background:#3390ec;content:""}
+.tg-profile-tabs button:disabled{opacity:1;cursor:default}
+.tg-profile-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:240px;padding:26px 28px;text-align:center;color:var(--text,#e9edef)}
+.tg-profile-empty-icon{width:64px;height:64px;display:grid;place-items:center;margin-bottom:14px;border-radius:50%;background:rgba(110,145,175,.12);color:#8fa1af}
+.tg-profile-empty-icon svg{width:28px;height:28px}
+.tg-profile-empty b{font-size:16px;font-weight:600}
+.tg-profile-empty p{max-width:300px;margin:8px 0 0;color:#8fa1af;font-size:13px;line-height:1.45}
+:root[data-theme="light"] .tg-profile-info-card{background:#fff;border-color:#e1e6eb}
+:root[data-theme="light"] .tg-profile-info-row{color:#18212b;border-color:#edf0f3}
+:root[data-theme="light"] .tg-profile-info-row small,:root[data-theme="light"] .tg-profile-tabs button{color:#71808c}
+:root[data-theme="light"] .tg-profile-tabs button.active{color:#2488d8}
+:root[data-theme="light"] .tg-profile-empty{color:#18212b}
+@media(min-width:651px){.mobile-profile-screen{max-width:640px;margin:0 auto;width:100%;padding-top:0}}
