@@ -564,3 +564,6 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .mfa-qr{display:block;width:210px;max-width:100%;height:auto;margin:14px auto;padding:10px;background:#fff;border-radius:12px}
 .privacy-dialog .modal-input{width:100%;margin:8px 0}
 .privacy-dialog .notice{margin:10px 0;padding:10px;border-radius:10px;background:#263c4d;color:#cfe8ff;font-size:13px}
+
+
+.attachment-chip{display:flex;align-items:center;gap:10px;max-width:min(280px,70vw);padding:9px 12px;margin:5px 0 7px;border:1px solid var(--border);border-radius:12px;background:rgba(127,145,170,.12);color:inherit;text-align:left;cursor:pointer}.attachment-chip>span{display:flex;flex-direction:column;min-width:0;overflow-wrap:anywhere;font-size:13px;font-weight:600}.attachment-chip small{font-size:11px;font-weight:400;opacity:.65;margin-top:3px}.attachment-chip:hover{background:rgba(127,145,170,.2)}.attach:disabled{opacity:.45;cursor:not-allowed}
