@@ -83,7 +83,7 @@ export default function App() {
   (allMembers??[]).forEach((m:{conversation_id:string;user_id:string})=>memberMap.set(m.conversation_id,[...(memberMap.get(m.conversation_id)??[]),m.user_id]));
   const lastMap=new Map<string,{body:string;created_at:string;attachment_name?:string|null}>();
   (allMessages??[]).forEach((m:{conversation_id:string;body:string;created_at:string;attachment_name?:string|null})=>lastMap.set(m.conversation_id,{body:m.body,created_at:m.created_at,attachment_name:m.attachment_name}));
-  const mapped:Chat[]=(conversations??[]).filter((c:{id:string;kind:Kind;public_username?:string|null})=>{if(c.kind!=="direct")return true;const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id);const other=otherId?profileMap.get(otherId):null;return Boolean(other&&!blockedIds.has(otherId!));}).map((c:{id:string;kind:Kind;title:string|null;created_at:string;public_username?:string|null},i:number)=>{
+  const mapped:Chat[]=(conversations??[]).filter((c:{id:string;kind:Kind;public_username?:string|null})=>{if(c.kind!=="direct")return true;const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id);return Boolean(otherId&&!blockedIds.has(otherId));}).map((c:{id:string;kind:Kind;title:string|null;created_at:string;public_username?:string|null},i:number)=>{
    const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id); const profile=otherId?profileMap.get(otherId):null;
    const name=c.kind==="direct"?(profile?.display_name??"Новый контакт"):(c.title??(c.kind==="channel"?"Канал без названия":"Группа без названия"));
    const last=lastMap.get(c.id);
