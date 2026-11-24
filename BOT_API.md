@@ -96,3 +96,17 @@ while (true) {
 - Private chats and group chats can generate updates when the bot is a member.
 - In groups, privacy mode is on by default and only slash commands are delivered unless the owner turns it off.
 - Inline mode, location requests, Web Apps, Games, file uploads, and Telegram network compatibility are not implemented yet.
+
+## No-code replies in BotFather
+
+You can add simple automatic replies without running a separate bot process. Open the in-app **@BotFather** chat:
+
+- `/setreply @MyBot hello => Hi! I can help you here.` — reply when a message contains `hello`.
+- `/setreply @MyBot =hello => Hello!` — exact message match.
+- `/setreply @MyBot ^/start => Welcome!` — message starts with `/start`.
+- `/myreplies @MyBot` — list saved rules.
+- `/delreply @MyBot hello` — delete a rule by its trigger text.
+
+Rules are checked in priority order when a user sends a message in a direct chat or group. In groups, the bot's privacy mode still applies: by default it only receives slash-command messages. Use `/setprivacy @MyBot off` if you want it to process ordinary group messages too.
+
+This is a lightweight rules-based responder, not a general-purpose code runtime. Webhooks, Web Apps, Games, and arbitrary code execution are not supported.
