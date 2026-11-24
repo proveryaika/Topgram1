@@ -793,3 +793,17 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 :root[data-theme="light"] .icon-btn{color:#667785}
 :root[data-theme="light"] .icon-btn:hover{background:#edf2f6;color:#18212b}
 :root[data-theme="light"][data-animations="off"] *,:root[data-theme="light"] *{scrollbar-color:#b9c6d0 transparent}
+
+
+:root[data-animations="off"] *, :root[data-animations="off"] *:before, :root[data-animations="off"] *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+:root[data-theme="light"] .modal-backdrop{background:#17212b66}
+:root[data-theme="light"] .modal-heading,:root[data-theme="light"] .new-chat-modal label{color:#18212b}
+:root[data-theme="light"] .new-chat-modal p{color:#647481}
+:root[data-theme="light"] .privacy-option{color:#18212b;border-color:#e5ebef}
+:root[data-theme="light"] .privacy-dialog .notice{background:#e8f3fb;color:#245b80}
+:root[data-theme="light"] .blocked-user-row{background:#f0f4f7;color:#18212b}
+:root[data-theme="light"] .privacy-dialog .settings-toggle-row{background:#f0f4f7;color:#18212b}
+:root[data-theme="light"] .mobile-profile-avatar{background:#3989c7}
+:root[data-theme="light"] .settings-icon{color:#fff}
+:root[data-theme="light"] .mobile-settings-card>button:not(.settings-toggle-row){color:#18212b;border-color:#edf0f3}
+:root[data-theme="light"] .mobile-top-actions .icon-btn{color:#536574}
