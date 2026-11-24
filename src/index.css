@@ -879,3 +879,26 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 :root[data-theme="light"] .account-settings-rows{background:#fff;border-color:#dce3e9}
 :root[data-theme="light"] .account-settings-row{color:#18212b;border-color:#edf0f3}
 :root[data-theme="light"] .account-settings-row:active{background:#edf4f9}
+
+
+/* Profile screen navigation */
+.mobile-profile-screen{min-height:0;overflow-y:auto}
+.mobile-profile-screen .mobile-top-actions{position:sticky;top:0;z-index:2}
+.mobile-profile-screen .mobile-profile-hero{padding:28px 16px 34px}
+.mobile-profile-username{font-size:14px;color:#65b7ff}
+.mobile-profile-status{margin:7px 0 12px!important}
+.mobile-profile-actions{width:min(100%,460px);margin:14px 0 20px}
+.mobile-profile-actions button:first-child{background:#3390ec;border-color:#3390ec;color:white;font-weight:650}
+.mobile-profile-info{width:min(100%,460px);overflow:hidden;border:1px solid #263746;border-radius:13px;background:#17212b;text-align:left}
+.mobile-profile-info-row{width:100%;min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 16px;border:0;border-bottom:1px solid #263746;background:transparent;color:#e9edef;text-align:left}
+.mobile-profile-info-row:last-child{border-bottom:0}
+.mobile-profile-info-row>span{display:flex;min-width:0;flex-direction:column;gap:5px}
+.mobile-profile-info-row small{font-size:11px;color:#8fa1af}
+.mobile-profile-info-row b{font-size:14px;font-weight:500;overflow-wrap:anywhere}
+.mobile-profile-info-row svg{width:17px;height:17px;flex:none;color:#8fa1af}
+.mobile-profile-info-row:active{background:#213243}
+.mobile-profile-screen .mobile-profile-empty{margin:32px 0 12px}
+:root[data-theme="light"] .mobile-profile-info{background:#fff;border-color:#dce3e9}
+:root[data-theme="light"] .mobile-profile-info-row{color:#18212b;border-color:#edf0f3}
+:root[data-theme="light"] .mobile-profile-info-row:active{background:#edf4f9}
+:root[data-theme="light"] .mobile-profile-info-row small{color:#71808c}
