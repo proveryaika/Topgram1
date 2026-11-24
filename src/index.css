@@ -1114,3 +1114,60 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .settings-balance{display:flex;flex-direction:column;align-items:center;gap:8px;padding:24px 12px;color:#2998e8}
 .settings-balance b{font-size:32px;color:var(--text,#111)}
 .settings-balance small{font-size:14px;color:var(--muted,#888)}
+
+
+/* Profile screen refined against the supplied Telegram screenshots */
+.mobile-profile-screen{background:#17212b;color:#f5f7fa;padding-bottom:calc(94px + env(safe-area-inset-bottom));}
+.tg-profile-topbar{height:48px;padding:0 14px;}
+.tg-profile-topbar .icon-btn{color:#f4f7fa;}
+.tg-profile-identity{padding:5px 16px 20px;}
+.tg-profile-avatar-wrap{width:112px;height:112px;margin:0 0 14px;}
+.tg-profile-identity .mobile-profile-avatar{width:112px;height:112px;border-radius:50%;background:linear-gradient(145deg,#fa82a9,#d94c7c);font-size:0;position:relative;}
+.tg-profile-identity .mobile-profile-avatar:after{content:"";width:11px;height:11px;border-radius:50%;background:#fff;position:absolute;left:calc(50% - 5.5px);top:calc(50% - 5.5px);}
+.tg-profile-name{font-size:23px;font-weight:600;color:#f4f7fa;}
+.tg-profile-level{display:flex;align-items:center;gap:8px;margin-top:10px;padding:0;border:0;background:transparent;color:#81919e;font-size:15px;}
+.tg-profile-level span{width:32px;height:36px;display:grid;place-items:center;border:2px solid #f2f5f8;border-radius:9px;color:#f4f7fa;font-size:16px;font-weight:700;clip-path:polygon(0 0,100% 0,100% 78%,50% 100%,0 78%);}
+.tg-profile-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%;margin-top:24px;}
+.tg-profile-actions button{min-height:82px;border-radius:18px;background:#263746;color:#f4f7fa;font-size:13px;gap:7px;}
+.tg-profile-actions button svg{width:27px;height:27px;color:#fff;}
+.tg-profile-channel{display:block;width:calc(100% - 28px);max-width:600px;margin:0 auto 14px;padding:15px 16px;border:0;border-radius:24px;background:#202c38;color:#f4f7fa;text-align:left;}
+.tg-profile-channel-title{display:flex;align-items:center;gap:9px;color:#75bdf5;font-size:16px;font-weight:600;margin-bottom:12px;}
+.tg-profile-channel-title small{padding:4px 9px;border-radius:16px;background:#293d50;color:#75bdf5;font-size:12px;}
+.tg-profile-channel-content{display:flex;align-items:center;gap:13px;}
+.tg-profile-channel-avatar{width:62px;height:62px;display:grid;place-items:center;flex:none;border-radius:50%;background:linear-gradient(145deg,#58c8df,#3295ce);font-size:25px;}
+.tg-profile-channel-content>span{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;}
+.tg-profile-channel-content b{font-size:17px;font-weight:600;}
+.tg-profile-channel-content small{font-size:14px;color:#75bdf5;}
+.tg-profile-channel-content>svg{color:#8fa1af;}
+.tg-profile-info-card{width:calc(100% - 28px);margin:0 auto 22px;border-radius:24px;background:#202c38;}
+.tg-profile-info-row{min-height:82px;padding:14px 20px;border:0;}
+.tg-profile-info-row b{font-size:18px;color:#f4f7fa;}
+.tg-profile-info-row small{font-size:14px;color:#81919e;}
+.tg-profile-info-row .tg-copy-id{color:#81919e;}
+.tg-profile-tabs{justify-content:flex-start;gap:4px;width:calc(100% - 24px);max-width:620px;margin:0 auto 10px;padding:5px;border:0;border-radius:28px;background:#202c38;overflow-x:auto;scrollbar-width:none;}
+.tg-profile-tabs button{flex:none;min-height:42px;padding:0 15px;border-radius:24px;font-size:15px;color:#81919e;}
+.tg-profile-tabs button.active{background:#30485e;color:#80c5ff;}
+.tg-profile-tabs button.active:after{display:none;}
+.tg-profile-posts-empty{min-height:360px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 24px 100px;text-align:center;}
+.tg-profile-posts-empty>b{font-size:23px;font-weight:650;color:#f5f7fa;}
+.tg-profile-posts-empty>p{max-width:340px;margin:12px 0 0;color:#81919e;font-size:16px;line-height:1.4;}
+.tg-profile-posts-empty>button{position:fixed;bottom:calc(105px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;min-height:54px;padding:0 28px;border:0;border-radius:30px;background:#229eea;color:#fff;font-size:17px;font-weight:600;box-shadow:0 2px 0 rgba(0,0,0,.2);}
+.tg-profile-posts-empty>button svg{width:21px;height:21px;}
+.tg-profile-gifts{padding:8px 14px 100px;}
+.tg-profile-gift-filters{display:flex;align-items:center;gap:10px;margin:8px 0 18px;overflow-x:auto;}
+.tg-profile-gift-filters button{flex:none;padding:9px 15px;border:0;border-radius:24px;background:transparent;color:#81919e;font-size:14px;}
+.tg-profile-gift-filters button.active{background:#263746;color:#f4f7fa;}
+.tg-profile-gift-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+.tg-profile-gift-tile{position:relative;aspect-ratio:1;border-radius:17px;background:#202c38;display:grid;place-items:center;overflow:hidden;}
+.tg-profile-gift-tile img{width:78%;height:78%;object-fit:contain;}
+.tg-profile-gift-tile>small{position:absolute;right:8px;top:7px;color:#fff;font-weight:700;text-shadow:0 1px 3px #333;}
+.tg-profile-gift-hint{text-align:center;color:#81919e;font-size:14px;line-height:1.4;margin:28px 12px;}
+.tg-rating-backdrop{position:fixed;inset:0;z-index:30;display:flex;align-items:flex-end;background:rgba(0,0,0,.58);}
+.tg-rating-sheet{position:relative;width:100%;max-height:88%;overflow:auto;padding:34px 24px calc(24px + env(safe-area-inset-bottom));border-radius:28px 28px 0 0;background:#202e3d;color:#f5f7fa;text-align:center;}
+.tg-rating-close{position:absolute;right:18px;top:16px;border:0;background:transparent;color:#81919e;}
+.tg-rating-medal{width:68px;height:68px;margin:8px auto 16px;display:grid;place-items:center;border-radius:50%;background:#229eea;color:#fff;}
+.tg-rating-medal svg{width:32px;height:32px;}
+.tg-rating-sheet h2{font-size:24px;margin:0 0 12px;}
+.tg-rating-sheet p{color:#81919e;font-size:16px;line-height:1.5;margin:0 auto 26px;max-width:390px;}
+.tg-rating-sheet>button:last-child{width:100%;min-height:54px;border:0;border-radius:12px;background:#229eea;color:#fff;font-size:17px;font-weight:600;}
+@media(min-width:651px){.mobile-profile-screen{max-width:640px;margin:0 auto;}.tg-profile-posts-empty>button{position:static;transform:none;margin-top:32px;}}
