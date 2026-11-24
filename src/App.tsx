@@ -154,6 +154,7 @@ export default function App() {
   <div className="tg-profile-identity">
    <div className="tg-profile-avatar-wrap"><div className="mobile-profile-avatar">{(profileName||"Г").trim().slice(0,1).toUpperCase()}</div></div>
    <div className="tg-profile-name">{profileName||"Пользователь"}</div>
+   {profileUsername&&<div className="tg-profile-username">@{profileUsername}</div>}
    <div className="tg-profile-online"><i/> в сети</div>
    <div className="tg-profile-actions">
     <button disabled title="Добавление фото профиля пока не поддерживается"><Camera/><span>Фото профиля</span></button>
@@ -165,7 +166,6 @@ export default function App() {
    <div className="tg-profile-info-row"><span><small>Номер TopGram</small><b>{topgramId||"Загружается…"}</b></span><button className="tg-copy-id" aria-label="Скопировать номер" onClick={()=>{if(topgramId)void navigator.clipboard?.writeText(topgramId);}}><Copy/></button></div>
    <button className="tg-profile-info-row" onClick={()=>openAccountEditor("bio")}><span><small>О себе</small><b>{profileBio||"Добавить информацию о себе"}</b></span><Pencil/></button>
    <button className="tg-profile-info-row" onClick={()=>openAccountEditor("username")}><span><small>Имя пользователя</small><b>{profileUsername?"@"+profileUsername:"Добавить имя пользователя"}</b></span><Pencil/></button>
-   <button className="tg-profile-info-row" onClick={()=>openAccountEditor("name")}><span><small>Имя</small><b>{profileName||"Добавить имя"}</b></span><Pencil/></button>
   </div>
   <div className="tg-profile-tabs"><button className="active">Публикации</button><button disabled>Архив публикаций</button></div>
   <div className="tg-profile-empty"><div className="tg-profile-empty-icon"><Bookmark/></div><b>Здесь пока нет публикаций</b><p>Фото и видео, которыми ты делишься в профиле, будут отображаться здесь</p></div>
