@@ -1365,69 +1365,27 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 @media(max-width:650px){.tg-account-page{padding:8px 14px 36px!important}.tg-account-info-row b{font-size:19px}.tg-birthday-sheet{width:100%}}
 
 
-/* Account editor interaction and responsive layout fixes */
-.account-settings-page.tg-account-page{width:100%;max-width:760px;min-width:0;box-sizing:border-box;overflow:visible;padding-bottom:calc(34px + env(safe-area-inset-bottom))!important}
-.tg-account-form{width:100%;min-width:0;box-sizing:border-box;gap:0}
-.tg-account-form button{cursor:pointer;-webkit-tap-highlight-color:transparent}
-.tg-account-form button:focus-visible,.tg-account-form input:focus-visible,.tg-account-form textarea:focus-visible{outline:2px solid #58b5f5;outline-offset:2px}
-.tg-account-info-row{box-sizing:border-box;min-width:0;cursor:pointer}
+/* Small, consistent fixes for the Telegram-style account screen */
+.mobile-settings-screen{background:#17212b;color:#f4f7fa}
+.mobile-settings-screen>.mobile-top-actions{background:#17212b;color:#f4f7fa}
+.account-settings-page.tg-account-page{width:100%;max-width:760px;min-width:0;box-sizing:border-box;margin:0 auto;overflow:visible}
+.tg-account-form{width:100%;min-width:0;box-sizing:border-box}
+.tg-account-info-row{min-width:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 .tg-account-info-row>div{min-width:0}
 .tg-account-info-row small{overflow-wrap:anywhere}
-.tg-account-chevron{color:#82909e;font-size:28px;line-height:1;margin-left:auto}
-.tg-account-disabled-row{cursor:default;opacity:.72}
-.tg-account-disabled-row em{margin-left:5px}
-.tg-account-switcher h3{margin-bottom:12px}
-.tg-account-current{min-width:0;flex-wrap:wrap}
-.tg-account-current b{overflow-wrap:anywhere}
-.tg-birthday-wheel{padding:0;box-sizing:border-box;height:210px;max-height:210px}
-.tg-wheel-col{scroll-padding-block:84px;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}.tg-wheel-col::before,.tg-wheel-col::after{content:"";display:block;height:84px;flex:0 0 84px}
-.tg-wheel-col>div{user-select:none}
-.tg-account-action-sheet p{color:#a1afbd;line-height:1.45;margin:8px 4px 18px}
-.tg-phone-input{display:block;width:100%;height:52px;box-sizing:border-box;border:1px solid #344454;border-radius:13px;background:#17212b;color:#f5f7fa;padding:0 15px;font:inherit;font-size:18px;margin:12px 0 16px}
-.tg-account-confirm{display:block;width:100%;min-height:52px;border:0;border-radius:14px;background:#269fe8;color:white;font:inherit;font-weight:600;padding:12px 16px;cursor:pointer}
-.tg-account-confirm:disabled{opacity:.55;cursor:wait}
-.tg-account-secondary{display:block;width:100%;margin-top:10px;border:0;background:transparent;color:#70baf2;font:inherit;padding:12px;cursor:pointer}
-.tg-account-modal-error{color:#ff8b8b!important;font-size:14px}
-.tg-account-action-sheet form{display:block}
-@media(max-width:650px){
- .account-settings-page.tg-account-page{max-width:none;padding:8px 14px calc(32px + env(safe-area-inset-bottom))!important}
- .tg-account-form{padding-bottom:12px}
- .tg-account-card,.tg-account-bio{border-radius:22px}
- .tg-account-info-row{padding-left:18px;padding-right:18px;gap:14px}
- .tg-birthday-sheet{max-height:min(78dvh,560px);overflow-y:auto}
- .tg-birthday-wheel{grid-template-columns:.75fr 1.35fr .9fr}
-}
-
-
-/* Final mobile account screen polish */
-.mobile-settings-screen{background:#17212b!important;color:#f4f7fa!important;overscroll-behavior-y:contain}
-.mobile-settings-screen>.mobile-top-actions{position:sticky;top:0;z-index:30;min-height:58px;padding:0 16px;background:#17212b!important;border-bottom:1px solid #263442;box-sizing:border-box}
-.mobile-settings-screen>.mobile-top-actions>b{font-size:21px;font-weight:600;color:#f4f7fa}
-.account-settings-page.tg-account-page{display:block;flex:1 0 auto;width:100%;max-width:760px;margin:0 auto;padding:10px 16px calc(44px + env(safe-area-inset-bottom))!important;box-sizing:border-box;background:#17212b!important;color:#f4f7fa}
-.tg-account-form{width:100%;display:flex;flex-direction:column;gap:0;box-sizing:border-box}
-.tg-account-card,.tg-account-bio{background:#202c38!important;border:0!important;color:#f4f7fa!important}
-.tg-account-card input,.tg-account-card textarea,.tg-account-bio textarea{color:#f4f7fa!important;caret-color:#70baf2}
-.tg-account-card input::placeholder,.tg-account-bio textarea::placeholder{color:#81909e!important}
-.tg-account-info-row{appearance:none;-webkit-appearance:none;text-decoration:none}
-.tg-account-info-row:active,.tg-add-account:active,.tg-account-logout:active{filter:brightness(1.12)}
-.tg-account-info-row:focus-visible,.tg-account-logout:focus-visible,.tg-add-account:focus-visible,.tg-birthday-sheet button:focus-visible{outline:2px solid #58b5f5;outline-offset:-2px}
 .tg-settings-done{min-width:44px;min-height:44px;display:grid;place-items:center}
 .tg-settings-done:disabled{opacity:.55}
-.tg-account-logout:disabled{opacity:.55}
-.tg-profile-posts-note{margin:14px 20px;color:#81909e;font-size:14px;line-height:1.45}
-.tg-account-action-sheet{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
-.tg-account-action-sheet header button{min-width:58px;min-height:40px}
-.tg-wheel-col{padding:84px 0;box-sizing:border-box;scroll-padding:84px 0}
-.tg-wheel-col::before,.tg-wheel-col::after{content:none!important}
-.tg-wheel-col>div{scroll-snap-align:center}
+.tg-birthday-backdrop{z-index:1200}
+.tg-birthday-wheel{height:210px;min-height:210px}
+.tg-wheel-col{height:210px;min-height:210px;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;scroll-snap-type:y mandatory;scrollbar-width:none;padding:0;box-sizing:border-box}
+.tg-wheel-col::-webkit-scrollbar{display:none}
+.tg-wheel-col::before,.tg-wheel-col::after{content:"";display:block;height:84px;min-height:84px;flex:0 0 84px}
+.tg-wheel-col>div{height:42px;min-height:42px;flex:0 0 42px;scroll-snap-align:center}
+.tg-wheel-highlight{z-index:2}
+.tg-birthday-sheet{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
 @media(max-width:650px){
- .mobile-settings-screen>.mobile-top-actions{min-height:56px;padding-left:14px;padding-right:14px}
- .account-settings-page.tg-account-page{padding:8px 14px calc(52px + env(safe-area-inset-bottom))!important}
- .tg-name-card{margin-top:8px;margin-bottom:20px}
- .tg-account-hint{margin:12px 18px 22px}
- .tg-about-card{margin-top:0}
- .tg-account-info-row{min-height:72px;padding:12px 18px;gap:14px}
- .tg-account-username-row input{min-height:42px}
+ .account-settings-page.tg-account-page{max-width:none;padding:8px 14px calc(36px + env(safe-area-inset-bottom))!important}
+ .tg-account-info-row{gap:14px;padding-left:18px;padding-right:18px}
  .tg-birthday-backdrop{align-items:flex-end}
- .tg-birthday-sheet{max-height:80dvh;overflow-y:auto}
+ .tg-birthday-sheet{width:100%;max-height:80dvh;overflow-y:auto}
 }
