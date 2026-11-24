@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
-import { Search, Plus, Send, Paperclip, Smile, MoreVertical, Phone, Video, ArrowLeft, MessageCircle, Users, Bookmark, Settings, Star, Gift, CheckCheck, X, Radio, LoaderCircle, ShieldCheck, Shield, AlertCircle, CheckCircle, History, RefreshCw } from "lucide-react";
+import { Search, Plus, Send, Paperclip, Smile, MoreVertical, Phone, Video, ArrowLeft, MessageCircle, Users, Bookmark, Settings, Star, Gift, CheckCheck, X, Radio, LoaderCircle, ShieldCheck, Shield, AlertCircle, CheckCircle, History, RefreshCw, BadgeCheck } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { isSupabaseConfigured, supabase } from "./lib/supabase";
 
