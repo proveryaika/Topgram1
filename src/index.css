@@ -682,3 +682,114 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
  .back-btn{display:grid}
  .system-notice-message{margin:auto}
 }
+
+
+/* Settings and profile screens: consistent Telegram-like hierarchy */
+.mobile-settings-screen,.mobile-profile-screen,.mobile-contacts-screen{min-height:0;flex:1;overflow-y:auto;background:#0e1621;color:#f1f3f5;padding:0 16px 88px}
+.mobile-top-actions{height:58px;position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;margin:0 -16px;padding:0 14px;background:#17212b;border-bottom:1px solid #263746}
+.mobile-top-actions>b{font-size:16px;font-weight:600}
+.mobile-top-actions .icon-btn{color:#a9b8c5}
+.mobile-settings-card{margin:12px 0 16px;padding:3px 0;border:1px solid #263746;border-radius:13px;background:#17212b;overflow:hidden}
+.mobile-settings-card>button:not(.settings-toggle-row){width:100%;min-height:66px;display:flex;align-items:center;gap:13px;padding:10px 15px;border:0;border-bottom:1px solid #263746;background:transparent;color:#f1f3f5;text-align:left}
+.mobile-settings-card>button:last-child{border-bottom:0}
+.mobile-settings-card>button:active{background:#213243}
+.mobile-settings-card>button>span:not(.settings-icon){display:flex;min-width:0;flex-direction:column;gap:4px}
+.mobile-settings-card b{font-size:14px;font-weight:600}
+.mobile-settings-card small{font-size:11px;line-height:1.35;color:#91a0ad}
+.settings-icon{width:36px;height:36px;flex:none;display:grid;place-items:center;border-radius:10px;color:#fff}
+.settings-icon svg{width:19px;height:19px}
+.settings-icon.blue{background:#347db7}.settings-icon.orange{background:#c17a36}.settings-icon.green{background:#318b70}.settings-icon.red{background:#b95762}.settings-icon.violet{background:#7662a9}
+.settings-info-row{display:flex;flex-direction:column;gap:6px;padding:16px}
+.settings-info-row>b{font-size:14px}
+.settings-info-row small{font-size:12px;line-height:1.5;color:#9aa9b5}
+.settings-choice-row{display:flex;gap:7px;padding:4px 14px 14px}
+.settings-choice-row button{flex:1;min-height:36px;border:1px solid #34495b;border-radius:8px;background:#202f3d;color:#c6d1da;font-size:12px}
+.settings-choice-row button.chosen{border-color:#3390ec;background:#203c55;color:#78c5ff}
+.settings-toggle-row{min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:12px 15px;border:0;border-top:1px solid #263746;background:transparent;color:#f1f3f5;text-align:left}
+.settings-toggle-row>span{display:flex;flex-direction:column;gap:4px}
+.switch{width:39px;height:23px;flex:none;position:relative;border-radius:20px;background:#52616d;transition:background .18s}
+.switch:after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform .18s}
+.switch.on{background:#3390ec}
+.switch.on:after{transform:translateX(16px)}
+.settings-folder-row{width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:0;border-bottom:1px solid #263746;background:transparent;color:#f1f3f5;text-align:left}
+.settings-folder-row>span:first-child{display:flex;flex-direction:column;gap:4px}
+.settings-folder-row>span:last-child{font-size:22px;color:#8193a2}
+.settings-balance{display:flex;align-items:center;flex-direction:column;gap:7px;padding:26px 12px 18px}
+.settings-balance svg{width:38px;height:38px;color:#f5bd4f;fill:#f5bd4f22}
+.settings-balance b{font-size:32px;font-weight:700}
+.settings-balance small{font-size:12px;color:#91a0ad}
+.mobile-profile-hero{display:flex;align-items:center;flex-direction:column;padding:24px 12px 30px}
+.mobile-profile-avatar{width:96px;height:96px;border-radius:50%;background:#347db7;display:grid;place-items:center;color:#fff;font-size:38px;font-weight:650}
+.mobile-profile-hero h2{margin:15px 0 3px;font-size:21px}
+.mobile-profile-hero>p{margin:3px 0 16px;color:#8e9eaa;font-size:13px}
+.mobile-profile-actions{width:min(100%,360px);display:flex;gap:8px;margin:10px 0 18px}
+.mobile-profile-actions button{flex:1;min-height:42px;border:1px solid #34495b;border-radius:9px;background:#1b2a38;color:#dbe5ed;font-size:13px}
+.mobile-profile-id{width:min(100%,420px);display:flex;flex-direction:column;gap:6px;padding:15px;border:1px solid #263746;border-radius:12px;background:#17212b}
+.mobile-profile-id b{font-size:17px}
+.mobile-profile-id small{font-size:11px;color:#91a0ad}
+.mobile-profile-empty{display:flex;align-items:center;flex-direction:column;gap:8px;margin:34px 0;color:#9aa9b5;text-align:center}
+.mobile-profile-empty b{font-size:15px;color:#dce4ea}
+.mobile-profile-empty span{font-size:12px}
+.mobile-contacts-empty{display:flex;align-items:center;flex-direction:column;gap:12px;padding:65px 20px;text-align:center;color:#a4b0ba}
+.mobile-contacts-empty>svg{width:42px;height:42px;color:#6bbcff}
+.mobile-contacts-empty>b{font-size:17px;color:#f1f3f5}
+.mobile-contacts-empty>span{font-size:13px;line-height:1.5}
+.mobile-contacts-empty .primary{margin-top:5px}
+.mobile-settings-screen .privacy-page{padding:0 0 18px;max-height:none;overflow:visible}
+.privacy-group{border:1px solid #263746;border-radius:13px;background:#17212b}
+.privacy-group h3{font-size:13px;font-weight:600;color:#65b7ff;letter-spacing:.1px}
+.privacy-row{min-height:56px;padding:11px 16px;font-size:13px}
+.privacy-name{font-size:13px}
+.privacy-value{font-size:12px;color:#8fbfe5}
+.privacy-symbol{width:26px;height:28px}
+.privacy-symbol svg{width:21px;height:21px}
+.privacy-footnote{font-size:11px}
+.new-chat-modal{background:#17212b;border:1px solid #304354;border-radius:14px}
+.modal-heading{font-size:16px}
+.modal-input,.new-chat-modal input,.new-chat-modal textarea{background:#0e1621;border-color:#304354;color:#f1f3f5;border-radius:9px}
+.primary{background:#3390ec;border-radius:9px}
+.primary:hover{background:#4aa3f2}
+.admin-shell{border-radius:14px}
+@media(max-width:650px){
+ .mobile-settings-screen,.mobile-profile-screen,.mobile-contacts-screen{padding-left:12px;padding-right:12px}
+ .mobile-top-actions{margin-left:-12px;margin-right:-12px;padding-left:12px;padding-right:12px}
+ .mobile-settings-card{margin:10px 0 14px}
+ .mobile-settings-card>button:not(.settings-toggle-row){min-height:64px;padding:9px 13px}
+ .mobile-profile-hero{padding-top:20px}
+ .mobile-settings-screen .privacy-page{padding-bottom:15px}
+ .privacy-group{margin:10px 0 14px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+:root[data-theme="light"]{color:#18212b;background:#f4f6f8}
+:root[data-theme="light"] body,:root[data-theme="light"] .app-shell,:root[data-theme="light"] .conversation,:root[data-theme="light"] .messages-area{background-color:#e9eef3;color:#18212b}
+:root[data-theme="light"] .sidebar,:root[data-theme="light"] .right-panel,:root[data-theme="light"] .conversation-header,:root[data-theme="light"] .mobile-top-actions{background:#fff;color:#18212b;border-color:#e1e7ed}
+:root[data-theme="light"] .chat-row:hover,:root[data-theme="light"] .mobile-settings-card>button:active{background:#edf3f8}
+:root[data-theme="light"] .chat-row.active{background:#dcecf9}
+:root[data-theme="light"] .chat-title,:root[data-theme="light"] .contact-info strong,:root[data-theme="light"] .mobile-settings-card b,:root[data-theme="light"] .mobile-profile-hero h2,:root[data-theme="light"] .mobile-profile-empty b{color:#18212b}
+:root[data-theme="light"] .chat-preview,:root[data-theme="light"] .chat-meta,:root[data-theme="light"] .contact-info span,:root[data-theme="light"] .mobile-settings-card small{color:#657482}
+:root[data-theme="light"] .search-box,:root[data-theme="light"] .composer,:root[data-theme="light"] .mobile-settings-card,:root[data-theme="light"] .privacy-group,:root[data-theme="light"] .mobile-profile-id,:root[data-theme="light"] .new-chat-modal{background:#fff;border-color:#dce3e9;color:#18212b}
+:root[data-theme="light"] .search-box input,:root[data-theme="light"] .composer input,:root[data-theme="light"] .modal-input,:root[data-theme="light"] .new-chat-modal input,:root[data-theme="light"] .new-chat-modal textarea{color:#18212b}
+:root[data-theme="light"] .search-box input::placeholder,:root[data-theme="light"] .composer input::placeholder{color:#82909b}
+:root[data-theme="light"] .bubble{background:#fff;border-color:#e0e6eb;color:#18212b;box-shadow:0 1px 2px #26374618}
+:root[data-theme="light"] .mine .bubble{background:#d8f0ff;border-color:#c6e6f8;color:#18212b}
+:root[data-theme="light"] .date-chip{background:#d8e2ea;color:#465664}
+:root[data-theme="light"] .privacy-row,:root[data-theme="light"] .settings-toggle-row,:root[data-theme="light"] .settings-folder-row{color:#18212b;border-color:#edf0f3}
+:root[data-theme="light"] .privacy-name{color:#18212b}
+:root[data-theme="light"] .privacy-value{color:#277ab7}
+:root[data-theme="light"] .settings-choice-row button,:root[data-theme="light"] .mobile-profile-actions button{background:#f3f6f8;border-color:#d8e0e7;color:#344657}
+:root[data-theme="light"] .settings-choice-row button.chosen{background:#e1f1fc;border-color:#3390ec;color:#176ba9}
+:root[data-theme="light"] .settings-info-row small,:root[data-theme="light"] .settings-balance small,:root[data-theme="light"] .mobile-profile-id small{color:#6e7d89}
+:root[data-theme="light"] .mobile-bottom-nav{background:#fff;border-color:#e1e7ed}
+:root[data-theme="light"] .mobile-bottom-nav button{color:#687784}
+:root[data-theme="light"] .mobile-bottom-nav button.active{color:#2485cf}
+:root[data-theme="light"] .mobile-profile-id{background:#fff;border-color:#dce3e9}
+:root[data-theme="light"] .mobile-contacts-empty{color:#657482}
+:root[data-theme="light"] .mobile-contacts-empty>b{color:#18212b}
+:root[data-theme="light"] .admin-shell{background:#fff;color:#18212b}
+:root[data-theme="light"] .side-footer{border-color:#e1e7ed}
+:root[data-theme="light"] .profile-mini strong{color:#18212b}
+:root[data-theme="light"] .icon-btn{color:#667785}
+:root[data-theme="light"] .icon-btn:hover{background:#edf2f6;color:#18212b}
+:root[data-theme="light"][data-animations="off"] *,:root[data-theme="light"] *{scrollbar-color:#b9c6d0 transparent}
