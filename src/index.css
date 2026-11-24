@@ -1608,3 +1608,11 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
  .tg-create-form textarea{margin-top:14px}
  .tg-auto-delete{min-height:46px}
 }
+
+
+/* Three-dot quick menu call-history placeholder */
+.tg-calls-page{position:relative;}
+.tg-calls-empty{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;text-align:center;color:var(--text-muted,#9296a8)}
+.tg-calls-empty>svg{width:42px;height:42px;opacity:.75}
+.tg-calls-empty>b{font-size:17px;color:var(--text-primary,#f5f6fa)}
+.tg-calls-empty>span{font-size:14px}
