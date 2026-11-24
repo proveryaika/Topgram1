@@ -546,3 +546,16 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .privacy-symbol svg{width:29px;height:29px;stroke-width:1.8;fill:none}
 .privacy-row:focus-visible,.privacy-option:focus-visible{outline:2px solid #78bdf1;outline-offset:-2px}
 .privacy-value{white-space:nowrap}
+
+
+.block-user-form{display:flex;gap:9px;align-items:center;margin:14px 0}
+.block-user-form .modal-input{flex:1;min-width:0}
+.block-user-form .primary{white-space:nowrap;padding:11px 14px}
+.blocked-user-list{display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto;margin:12px 0}
+.blocked-user-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;border-radius:12px;background:#202f3e}
+.blocked-user-row>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.blocked-user-row b{font-size:14px;overflow:hidden;text-overflow:ellipsis}
+.blocked-user-row small{font-size:12px;color:#8b9baa}
+.privacy-unblock{border:0;background:transparent;color:#78bdf1;font-size:13px;white-space:nowrap;cursor:pointer}
+.privacy-unblock:disabled{opacity:.5}
+@media(max-width:420px){.block-user-form{align-items:stretch;flex-direction:column}.block-user-form .primary{width:100%}}
