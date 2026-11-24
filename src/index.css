@@ -559,3 +559,8 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .privacy-unblock{border:0;background:transparent;color:#78bdf1;font-size:13px;white-space:nowrap;cursor:pointer}
 .privacy-unblock:disabled{opacity:.5}
 @media(max-width:420px){.block-user-form{align-items:stretch;flex-direction:column}.block-user-form .primary{width:100%}}
+
+
+.mfa-qr{display:block;width:210px;max-width:100%;height:auto;margin:14px auto;padding:10px;background:#fff;border-radius:12px}
+.privacy-dialog .modal-input{width:100%;margin:8px 0}
+.privacy-dialog .notice{margin:10px 0;padding:10px;border-radius:10px;background:#263c4d;color:#cfe8ff;font-size:13px}
