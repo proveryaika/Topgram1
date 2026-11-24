@@ -1608,21 +1608,3 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
  .tg-create-form textarea{margin-top:14px}
  .tg-auto-delete{min-height:46px}
 }
-
-
-/* Separate overflow quick settings from the new-chat flow */
-@media(max-width:650px){
- .tg-overflow-sheet{position:fixed;z-index:101;top:calc(14px + env(safe-area-inset-top));right:14px;width:min(310px,calc(100vw - 28px));padding:8px;background:var(--panel-raised,#303344);color:var(--text-primary,#f7f7fb);border:1px solid var(--border-color,#41465a);border-radius:18px;box-shadow:0 14px 38px #0006}
- .tg-overflow-sheet>header{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 10px 4px 12px}
- .tg-overflow-sheet>header>b{font-size:16px}
- .tg-overflow-sheet>header>button{width:34px;height:34px;border:0;border-radius:50%;background:transparent;color:inherit;display:grid;place-items:center}
- .tg-overflow-theme,.tg-overflow-item{width:100%;min-height:64px;padding:8px 12px;border:0;border-radius:12px;background:transparent;color:inherit;display:flex;align-items:center;gap:13px;text-align:left}
- .tg-overflow-theme:active,.tg-overflow-item:active{background:var(--hover-bg,#3a3d50)}
- .tg-overflow-symbol{width:40px;height:40px;border-radius:12px;background:#577bea;color:white;display:grid;place-items:center;font-size:21px;flex:none}
- .tg-overflow-theme>span:nth-child(2){display:flex;flex:1;flex-direction:column;gap:4px}
- .tg-overflow-theme small{font-size:12px;color:var(--text-muted,#999eae)}
- .tg-overflow-theme>i{font-size:12px;font-style:normal;color:#8da8f5}
- .tg-overflow-item>svg{width:22px;height:22px;color:#8da8f5}
- .tg-overflow-item>span{flex:1;font-size:15px}
- .tg-overflow-item>b{font-size:22px;font-weight:400;color:var(--text-muted,#999eae)}
-}
