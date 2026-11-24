@@ -1634,3 +1634,4 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .conversation-header .header-actions .icon-btn{flex:0 0 38px}
 
 .topgram-notifications-avatar{width:100%;height:100%;display:block;object-fit:cover;border-radius:inherit}
+.avatar:has(>.topgram-notifications-avatar){overflow:hidden;background:#17212b!important}.avatar>.topgram-notifications-avatar{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;border-radius:inherit}.system-notice-heading{display:flex;align-items:center;gap:10px;width:100%;margin-bottom:12px}.system-notice-heading>.avatar{width:42px;height:42px;min-width:42px;border-radius:50%;overflow:hidden}.system-notice-identity{display:flex;flex-direction:column;align-items:flex-start;gap:3px}.system-notice-identity>b{font-weight:700;font-size:14px}.system-notice-verified{display:flex;align-items:center;gap:4px;color:#3390ec;font-size:11px}.system-notice-message>.system-notice-heading+.verified-label{display:none}
