@@ -1652,3 +1652,14 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .tg-account-username-row{width:100%;text-align:left;cursor:pointer}
 .tg-account-username-row>div{flex:1;min-width:0}
 @media(max-width:650px){.tg-username-editor{padding:16px 14px}.mobile-top-actions:has(+.account-settings-page) .tg-settings-done{min-width:76px}}
+
+/* Clean, Telegram-style message layout: only message text and sent time. */
+.message-line{display:flex;justify-content:flex-start;align-self:stretch}
+.message-line.mine{justify-content:flex-end}
+.message-line .bubble{display:block;width:fit-content;max-width:min(72%,620px);padding:9px 12px 7px;border:0;border-radius:12px 12px 12px 3px;box-shadow:none;overflow-wrap:anywhere}
+.message-line.mine .bubble{border-radius:12px 12px 3px 12px}
+.message-text{white-space:pre-wrap;overflow-wrap:anywhere}
+.message-line .message-time{display:inline-flex;justify-content:flex-end;align-items:center;white-space:nowrap;font-size:10px;line-height:1;color:#9fb2c1;margin:0 0 0 12px;vertical-align:baseline}
+.message-line .message-tools{display:none!important}
+:root[data-theme="light"] .message-line .message-time{color:#71808d}
+@media(max-width:650px){.message-line .bubble{max-width:88%}}
