@@ -820,3 +820,19 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 :root[data-theme="light"] .admin-gift-edit,:root[data-theme="light"] .admin-secondary{background:#edf5fb;border-color:#cbdde9;color:#23658e}
 :root[data-theme="light"] .admin-gift-drop-card .modal-input{background:#fff;border-color:#d6e0e8;color:#18212b}
 @media(max-width:650px){.admin-gift-row{align-items:flex-start}.admin-gift-drop-card .admin-operation-row{grid-template-columns:minmax(0,1fr) 76px}.admin-gift-edit{margin-left:auto}}
+
+/* Gift marketplace and Stars history */
+.gift-market-wrap{display:flex;flex-direction:column;gap:14px;padding:12px 14px 24px}
+.gift-market-balance{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--line,#263746);border-radius:15px;background:var(--panel,#17232f)}
+.gift-market-balance span{display:flex;align-items:center;gap:8px;color:#e6bd61}.gift-market-balance button{border:0;background:transparent;color:#70b8f0;font-size:12px;cursor:pointer}
+.gift-market-heading{display:flex;flex-direction:column;gap:4px}.gift-market-heading>b{font-size:16px}.gift-market-heading>small,.market-footnote{font-size:11px;line-height:1.45;color:var(--muted,#91a2b1)}
+.gift-market-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.gift-market-card{overflow:hidden;border:1px solid var(--line,#263746);border-radius:14px;background:var(--panel,#17232f);min-width:0}
+.gift-market-card>img,.gift-market-placeholder{width:100%;height:116px;object-fit:cover;background:linear-gradient(140deg,#263c51,#17232f);display:flex;align-items:center;justify-content:center;color:#7eb9e8}
+.gift-market-placeholder svg{width:32px;height:32px}
+.gift-market-card-copy{display:flex;flex-direction:column;gap:7px;padding:10px}.gift-market-card-copy>b{font-size:13px}.gift-market-card-copy>small{font-size:10px;color:var(--muted,#91a2b1);min-height:26px;line-height:1.35}.gift-market-card-copy>span{display:flex;align-items:center;gap:5px;color:#e8c66e;font-size:12px;font-weight:700}.gift-market-card-copy .primary{width:100%;min-height:35px;font-size:11px}
+.inventory-heading{margin-top:8px}.gift-inventory-list{display:flex;flex-direction:column;gap:8px}.gift-inventory-row,.market-history-row{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid var(--line,#263746);border-radius:12px;background:var(--panel,#17232f)}.gift-inventory-row img,.gift-inventory-placeholder{width:42px;height:42px;flex:none;object-fit:cover;border-radius:9px}.gift-inventory-placeholder{display:grid;place-items:center;background:#263c51;color:#85b9e4}.gift-inventory-row>span,.market-history-row>span{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}.gift-inventory-row b,.market-history-row b{font-size:12px}.gift-inventory-row small,.market-history-row small{font-size:10px;color:var(--muted,#91a2b1)}.gift-inventory-row>strong,.market-history-row>strong{font-size:12px;color:#d7b75f;white-space:nowrap}
+.market-empty{padding:16px;text-align:center;color:var(--muted,#91a2b1);font-size:12px}.market-error,.market-success{padding:10px 12px;border-radius:10px;font-size:12px}.market-error{background:#492b31;color:#ffc4c8}.market-success{background:#1c453b;color:#b9f0d6}.market-refresh{min-height:38px}.market-history-row .negative{color:#e79a9a}
+:root[data-theme="light"] .gift-market-card,:root[data-theme="light"] .gift-market-balance,:root[data-theme="light"] .gift-inventory-row,:root[data-theme="light"] .market-history-row{background:#fff;border-color:#dce5ec;color:#17212b}
+:root[data-theme="light"] .gift-market-placeholder,:root[data-theme="light"] .gift-inventory-placeholder{background:#eaf2f8;color:#3778a8}
+@media(max-width:390px){.gift-market-grid{grid-template-columns:1fr}.gift-market-card{display:grid;grid-template-columns:96px minmax(0,1fr)}.gift-market-card>img,.gift-market-placeholder{height:100%;min-height:130px}.gift-market-card-copy>small{min-height:0}}
