@@ -1264,3 +1264,53 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .mobile-settings-screen .privacy-row:active{
   background:#263746!important;
 }
+
+/* Reliable mobile navigation and card switching */
+@media(max-width:650px){
+  .sidebar.hide-mobile{display:none!important;}
+  .conversation.show-mobile{
+    display:flex!important;
+    position:fixed!important;
+    inset:0!important;
+    z-index:18!important;
+    width:100%!important;
+    height:100dvh!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .conversation.show-mobile .messages-area{
+    min-height:0;
+    flex:1 1 auto;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+  }
+  .conversation.show-mobile .composer{
+    flex:0 0 auto;
+  }
+  .conversation.show-mobile .back-btn{display:grid!important;}
+  .mobile-view-profile .mobile-profile-screen,
+  .mobile-view-settings .mobile-settings-screen,
+  .mobile-view-contacts .mobile-contacts-screen{
+    min-height:0;
+    height:calc(100dvh - env(safe-area-inset-bottom));
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+  .tg-profile-tabs{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-x pan-y;
+  }
+  .tg-profile-tabs button{scroll-snap-align:start;white-space:nowrap;}
+  .mobile-bottom-nav{touch-action:manipulation;}
+  .mobile-bottom-nav button{min-width:0;touch-action:manipulation;}
+}
+.chat-row,.tg-profile-tabs button,.mobile-bottom-nav button,.settings-folder-row{
+  -webkit-tap-highlight-color:transparent;
+}
