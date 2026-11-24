@@ -1663,3 +1663,9 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .message-line .message-tools{display:none!important}
 :root[data-theme="light"] .message-line .message-time{color:#71808d}
 @media(max-width:650px){.message-line .bubble{max-width:88%}}
+
+/* Delivery/read state sits on its own line beneath the sent timestamp. */
+.message-line .message-receipt{display:flex;justify-content:flex-end;align-items:center;height:13px;margin-top:2px;color:#9fb2c1}
+.message-line .message-receipt.read{color:#4da3ff}
+:root[data-theme="light"] .message-line .message-receipt{color:#82909b}
+:root[data-theme="light"] .message-line .message-receipt.read{color:#168bd2}
