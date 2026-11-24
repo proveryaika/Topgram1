@@ -1171,3 +1171,24 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .tg-rating-sheet p{color:#81919e;font-size:16px;line-height:1.5;margin:0 auto 26px;max-width:390px;}
 .tg-rating-sheet>button:last-child{width:100%;min-height:54px;border:0;border-radius:12px;background:#229eea;color:#fff;font-size:17px;font-weight:600;}
 @media(min-width:651px){.mobile-profile-screen{max-width:640px;margin:0 auto;}.tg-profile-posts-empty>button{position:static;transform:none;margin-top:32px;}}
+
+/* Final profile fixes: restore action buttons and enforce readable dark Telegram palette */
+.mobile-profile-screen{background:#17212b!important;color:#f4f7fa!important;}
+.tg-profile-actions{display:grid!important;visibility:visible!important;}
+.tg-profile-photo-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;}
+.tg-profile-identity .mobile-profile-avatar{overflow:hidden;}
+.tg-profile-identity .mobile-profile-avatar img{width:100%;height:100%;display:block;object-fit:cover;border-radius:50%;}
+.tg-profile-online{display:block;margin-top:5px;color:#81919e!important;font-size:15px;}
+.tg-profile-info-card{background:#202c38!important;}
+.tg-profile-info-row{color:#f4f7fa!important;}
+.tg-profile-info-row b,:root[data-theme="light"] .tg-profile-info-row b,:root[data-theme="light"] .tg-profile-info-row:last-child b{color:#f4f7fa!important;font-size:18px;font-weight:400;}
+.tg-profile-info-row small,:root[data-theme="light"] .tg-profile-info-row small{color:#81919e!important;font-size:14px;}
+.tg-profile-info-row .tg-copy-id{color:#8fa1af!important;}
+.tg-profile-qr{color:#65b8f4!important;}
+.tg-profile-tabs{background:#202c38!important;border:0!important;border-radius:28px!important;}
+.tg-profile-tabs button{color:#81919e!important;}
+.tg-profile-tabs button.active{background:#30485e!important;color:#80c5ff!important;}
+.tg-profile-tabs button.active:after{display:none!important;}
+.tg-profile-posts-empty>b{color:#f4f7fa!important;}
+.tg-profile-posts-empty>p{color:#81919e!important;}
+.mobile-nav-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
