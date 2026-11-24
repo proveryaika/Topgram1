@@ -1192,3 +1192,5 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .tg-profile-posts-empty>b{color:#f4f7fa!important;}
 .tg-profile-posts-empty>p{color:#81919e!important;}
 .mobile-nav-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+
+.tg-profile-identity .mobile-profile-avatar:has(img):after{display:none!important;}
