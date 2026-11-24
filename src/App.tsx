@@ -3,6 +3,7 @@ import type { FormEvent } from "react";
 import { Search, Plus, Send, Paperclip, Smile, MoreVertical, Phone, ArrowLeft, MessageCircle, Users, Bookmark, Settings, Star, Gift, Sun, Moon, Wallet, CheckCheck, X, Radio, LoaderCircle, ShieldCheck, Shield, AlertCircle, CheckCircle, History, RefreshCw, BadgeCheck, Pencil, Trash2, Check, Copy, Timer, LockKeyhole, KeyRound, Mail, Hand, MonitorSmartphone, UserPlus, Mic, StopCircle, Camera } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { isSupabaseConfigured, supabase } from "./lib/supabase";
+import topgramNotificationsAvatar from "../Неоновый логотип TopGram с короной.png";
 
 type Kind = "direct" | "group" | "channel";
 type Chat = { id: string; name: string; handle: string; preview: string; time: string; unread?: number; color: string; online?: boolean; peerId?: string; kind: Kind };
@@ -27,7 +28,7 @@ const giftCodeForTitle = (title:string) => {
  return Array.from(title.toLocaleLowerCase("ru-RU")).map(char=>map[char]??char).join("").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,48);
 };
 
-function Avatar({chat,size="normal"}:{chat:Chat;size?:"normal"|"small"}) { return <div className={`avatar ${size}`} style={{background:chat.color}}>{chat.kind==="channel" ? <Radio/> : chat.kind==="group" ? <Users/> : chat.name.slice(0,1).toUpperCase()}{chat.online&&<i/>}</div>; }
+function Avatar({chat,size="normal"}:{chat:Chat;size?:"normal"|"small"}) { return <div className={`avatar ${size}`} style={{background:chat.color}}>{chat.id==="topgram-notifications" ? <img className="topgram-notifications-avatar" src={topgramNotificationsAvatar} alt="TopGram"/> : chat.kind==="channel" ? <Radio/> : chat.kind==="group" ? <Users/> : chat.name.slice(0,1).toUpperCase()}{chat.online&&<i/>}</div>; }
 
 export default function App() {
  const [user,setUser]=useState<User|null>(null);
