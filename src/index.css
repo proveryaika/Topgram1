@@ -1642,3 +1642,13 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .system-notice-identity{min-width:0;flex:1}
 .system-notice-handle{font-size:11px;color:#9aacc0}
 .contact-info .peer-status:not(.online){color:var(--text-muted,#9296a8)}
+
+/* Telegram-style dedicated username editor */
+.tg-username-editor{width:100%;max-width:620px;margin:0 auto;padding:18px 16px}
+.tg-username-input-wrap{display:flex;align-items:center;gap:10px;padding:13px 14px;border:1px solid var(--border,#34465a);border-radius:12px;background:var(--panel,#172535);color:var(--text,#eef3f8)}
+.tg-username-input-wrap>span{font-size:18px;color:#7daed8}
+.tg-username-input-wrap>input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:inherit;font:inherit;font-size:16px}
+.tg-username-editor>p{margin:12px 3px;color:var(--muted,#91a0b2);font-size:13px;line-height:1.5}
+.tg-account-username-row{width:100%;text-align:left;cursor:pointer}
+.tg-account-username-row>div{flex:1;min-width:0}
+@media(max-width:650px){.tg-username-editor{padding:16px 14px}.mobile-top-actions:has(+.account-settings-page) .tg-settings-done{min-width:76px}}
