@@ -940,3 +940,29 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 @media(min-width:651px){
  .mobile-profile-screen{display:block!important;max-width:640px;margin:0 auto;width:100%;padding-top:12px}
 }
+
+
+/* Telegram-inspired native profile layout */
+.mobile-profile-screen{padding:0 0 calc(110px + env(safe-area-inset-bottom));background:var(--app-bg,#17212b)}
+.mobile-profile-toolbar{padding:0 16px;height:56px;background:var(--app-bg,#17212b)}
+.mobile-profile-toolbar>b{font-size:20px;font-weight:600}
+.tg-profile-identity{display:flex;flex-direction:column;align-items:center;padding:20px 18px 24px;text-align:center}
+.tg-profile-identity .mobile-profile-avatar{width:96px;height:96px;margin-bottom:14px;border-radius:50%;font-size:38px}
+.tg-profile-name{max-width:100%;font-size:22px;font-weight:650;line-height:1.25;overflow-wrap:anywhere;color:var(--text,#e9edef)}
+.tg-profile-username{margin-top:4px;font-size:15px;color:#65b8f4}
+.tg-profile-online{display:flex;align-items:center;gap:6px;margin-top:7px;font-size:13px;color:#8fa1af}
+.tg-profile-online i{width:7px;height:7px;border-radius:50%;background:#42c879}
+.tg-profile-bio{max-width:520px;margin:14px 0 0;font-size:14px;line-height:1.45;color:var(--text,#e9edef);overflow-wrap:anywhere}
+.tg-profile-caption{max-width:620px;margin:18px auto 7px;padding:0 16px;color:#65b8f4;font-size:13px;font-weight:600;text-align:left}
+.tg-profile-group{max-width:620px;margin:0 auto;background:var(--panel-bg,#202c38);border-top:1px solid var(--line,#34424f);border-bottom:1px solid var(--line,#34424f)}
+.tg-profile-row{width:100%;min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 17px;border:0;border-bottom:1px solid var(--line,#34424f);background:transparent;color:var(--text,#e9edef);text-align:left;cursor:pointer}
+.tg-profile-row:last-child{border-bottom:0}
+.tg-profile-row:active{background:rgba(100,160,210,.12)}
+.tg-profile-row>span{display:flex;flex:1;min-width:0;flex-direction:column;gap:4px}
+.tg-profile-row b{font-size:15px;font-weight:500;line-height:1.35;overflow-wrap:anywhere}
+.tg-profile-row small{font-size:12px;color:#8fa1af;line-height:1.35}
+.tg-profile-row>svg{width:18px;height:18px;flex:none;color:#8fa1af}
+:root[data-theme="light"] .tg-profile-group{background:#fff;border-color:#e5e9ed}
+:root[data-theme="light"] .tg-profile-row{color:#18212b;border-color:#edf0f3}
+:root[data-theme="light"] .tg-profile-row small,:root[data-theme="light"] .tg-profile-online{color:#71808c}
+:root[data-theme="light"] .tg-profile-name,:root[data-theme="light"] .tg-profile-bio{color:#18212b}
