@@ -42,12 +42,14 @@ export default function App() {
   if(memberError){console.error(memberError);return;}
   const ids=(members??[]).map((m:{conversation_id:string})=>m.conversation_id);
   if(!ids.length){setChats([]);setMessages([]);setActiveId("");return;}
-  const [{data:conversations,error:convError},{data:allMessages,error:msgError},{data:allMembers,error:allMembersError}]=await Promise.all([
+  const [{data:conversations,error:convError},{data:allMessages,error:msgError},{data:allMembers,error:allMembersError},{data:blockedRows,error:blockedRowsError}]=await Promise.all([
    supabase.from("tg_conversations").select("id,kind,title,created_at").in("id",ids).order("created_at",{ascending:false}),
    supabase.from("tg_messages").select("id,conversation_id,sender_id,body,created_at").in("conversation_id",ids).order("created_at",{ascending:true}).limit(500),
-   supabase.from("tg_conversation_members").select("conversation_id,user_id").in("conversation_id",ids)
+   supabase.from("tg_conversation_members").select("conversation_id,user_id").in("conversation_id",ids),
+   supabase.from("tg_user_blocks").select("blocked_user_id").eq("blocker_id",current.id)
   ]);
-  if(convError||msgError||allMembersError){console.error(convError??msgError??allMembersError);return;}
+  if(convError||msgError||allMembersError||blockedRowsError){console.error(convError??msgError??allMembersError??blockedRowsError);return;}
+  const blockedIds=new Set((blockedRows??[]).map((r:{blocked_user_id:string})=>r.blocked_user_id));
   const others=[...new Set((allMembers??[]).filter((m:{user_id:string})=>m.user_id!==current.id).map((m:{user_id:string})=>m.user_id))];
   const {data:profiles}=others.length?await supabase.from("tg_profiles").select("id,username,display_name,is_bot").in("id",others):{data:[] as {id:string;username:string|null;display_name:string;is_bot:boolean}[]};
   const profileMap=new Map((profiles??[]).map((p:{id:string;username:string|null;display_name:string;is_bot?:boolean})=>[p.id,{...p,is_bot:Boolean(p.is_bot)}]));
@@ -55,7 +57,7 @@ export default function App() {
   (allMembers??[]).forEach((m:{conversation_id:string;user_id:string})=>memberMap.set(m.conversation_id,[...(memberMap.get(m.conversation_id)??[]),m.user_id]));
   const lastMap=new Map<string,{body:string;created_at:string}>();
   (allMessages??[]).forEach((m:{conversation_id:string;body:string;created_at:string})=>lastMap.set(m.conversation_id,{body:m.body,created_at:m.created_at}));
-  const mapped:Chat[]=(conversations??[]).filter((c:{id:string;kind:Kind})=>{if(c.kind!=="direct")return true;const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id);const other=otherId?profileMap.get(otherId):null;return Boolean(other&&!other.is_bot&&lastMap.has(c.id));}).map((c:{id:string;kind:Kind;title:string|null;created_at:string},i:number)=>{
+  const mapped:Chat[]=(conversations??[]).filter((c:{id:string;kind:Kind})=>{if(c.kind!=="direct")return true;const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id);const other=otherId?profileMap.get(otherId):null;return Boolean(other&&!other.is_bot&&!blockedIds.has(otherId!)&&lastMap.has(c.id));}).map((c:{id:string;kind:Kind;title:string|null;created_at:string},i:number)=>{
    const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id); const profile=otherId?profileMap.get(otherId):null;
    const name=c.kind==="direct"?(profile?.display_name??"Новый контакт"):(c.title??(c.kind==="channel"?"Канал без названия":"Группа без названия"));
    const last=lastMap.get(c.id);
@@ -77,8 +79,8 @@ export default function App() {
  useEffect(()=>{if(!supabase||!user)return;supabase.from("tg_profiles").select("stars_balance").eq("id",user.id).maybeSingle().then(({data})=>{if(data)setStarsBalance(Number(data.stars_balance??0));});},[user]);
  function updatePreference<K extends keyof typeof settingsPrefs>(key:K,value:(typeof settingsPrefs)[K]){setSettingsPrefs(p=>({...p,[key]:value}));}
  async function loadBlockedUsers(){if(!supabase||!user)return;const {data,error}=await supabase.from("tg_user_blocks").select("blocked_user_id").eq("blocker_id",user.id);if(error){setBlockError("Не удалось загрузить чёрный список.");return;}const ids=(data??[]).map((x:{blocked_user_id:string})=>x.blocked_user_id);if(!ids.length){setBlockedUsers([]);return;}const {data:profiles,error:profileError}=await supabase.from("tg_profiles").select("id,tg_id,display_name").in("id",ids);if(profileError){setBlockError("Не удалось загрузить профили.");return;}setBlockedUsers((profiles??[]).map((p:{id:string;tg_id:string|null;display_name:string})=>({id:p.id,tg_id:p.tg_id??"ID недоступен",display_name:p.display_name})));setBlockError("");}
- async function addBlockedUser(e:FormEvent){e.preventDefault();if(!supabase||!user)return;const number=blockInput.trim().replace(/\\s/g,"");if(!/^\\+?7\\d{6}$/.test(number)){setBlockError("Введи номер TopGram в формате +7XXXXXX.");return;}setBlockBusy(true);setBlockError("");const {data:target,error:lookupError}=await supabase.from("tg_profiles").select("id").eq("tg_id",number.startsWith("+")?number:"+"+number).maybeSingle();if(lookupError||!target){setBlockError("Пользователь с таким номером TopGram не найден.");setBlockBusy(false);return;}const {error}=await supabase.from("tg_user_blocks").insert({blocker_id:user.id,blocked_user_id:target.id});setBlockBusy(false);if(error){setBlockError(error.code==="23505"?"Этот пользователь уже заблокирован.":"Не удалось заблокировать пользователя.");return;}setBlockInput("");await loadBlockedUsers();}
- async function removeBlockedUser(id:string){if(!supabase||!user)return;setBlockBusy(true);const {error}=await supabase.from("tg_user_blocks").delete().eq("blocker_id",user.id).eq("blocked_user_id",id);setBlockBusy(false);if(error){setBlockError("Не удалось разблокировать пользователя.");return;}await loadBlockedUsers();}
+ async function addBlockedUser(e:FormEvent){e.preventDefault();if(!supabase||!user)return;const number=blockInput.trim().replace(/\\s/g,"");if(!/^\\+?7\\d{6}$/.test(number)){setBlockError("Введи номер TopGram в формате +7XXXXXX.");return;}setBlockBusy(true);setBlockError("");const {data:target,error:lookupError}=await supabase.from("tg_profiles").select("id").eq("tg_id",number.startsWith("+")?number:"+"+number).maybeSingle();if(lookupError||!target){setBlockError("Пользователь с таким номером TopGram не найден.");setBlockBusy(false);return;}const {error}=await supabase.from("tg_user_blocks").insert({blocker_id:user.id,blocked_user_id:target.id});setBlockBusy(false);if(error){setBlockError(error.code==="23505"?"Этот пользователь уже заблокирован.":"Не удалось заблокировать пользователя.");return;}setBlockInput("");await loadBlockedUsers();await loadWorkspace(user);}
+ async function removeBlockedUser(id:string){if(!supabase||!user)return;setBlockBusy(true);const {error}=await supabase.from("tg_user_blocks").delete().eq("blocker_id",user.id).eq("blocked_user_id",id);setBlockBusy(false);if(error){setBlockError("Не удалось разблокировать пользователя.");return;}await loadBlockedUsers();await loadWorkspace(user);}
 
  function openSettingsSection(section:typeof settingsSection){setSettingsSection(section);setMobileTab("settings");setMobileChat(false);}
 
