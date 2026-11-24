@@ -150,33 +150,24 @@ export default function App() {
  <nav className="filters">{["Все","Личные","Группы","Каналы"].map(x=><button key={x} className={tab===x?"selected":""} onClick={()=>setTab(x)}>{x}</button>)}</nav>
  <div className="chat-list">{visible.map(chat=><button key={chat.id} className={`chat-row ${activeId===chat.id?"active":""}`} onClick={()=>{setActiveId(chat.id);setMobileChat(true);}}><Avatar chat={chat}/><span className="chat-copy"><span className="chat-title">{chat.name}{chat.id==="topgram-notifications"&&<BadgeCheck className="verified-label" size={14}/>}</span><span className="chat-preview">{chat.preview}</span></span><span className="chat-meta"><small>{chat.time}</small>{chat.unread&&<b>{chat.unread}</b>}</span></button>)}{visible.length===0&&<div className="empty-search">{user?"Здесь пока пусто. Создай первый чат.":"Ничего не найдено"}</div>}</div>
  {mobileTab==="profile"&&<section className="mobile-profile-screen">
-  <div className="mobile-profile-toolbar"><b>Мой профиль</b><div><button className="icon-btn" aria-label="Изменить профиль" title="Изменить профиль" onClick={()=>{setSettingsSection("account");setAccountEditField(null);setActionError("");setMobileTab("settings");}}><Pencil/></button><button className="icon-btn" aria-label="Настройки" title="Настройки" onClick={()=>{setMobileTab("settings");setSettingsSection("home");setAccountEditField(null);}}><Settings/></button></div></div>
+  <div className="tg-profile-topbar"><button className="icon-btn" aria-label="QR-код" title="QR-код" disabled><span className="tg-qr-mark">▦</span></button><div><button className="icon-btn" aria-label="Поиск" title="Поиск" disabled><Search/></button><button className="icon-btn" aria-label="Ещё" title="Ещё" onClick={()=>{setMobileTab("settings");setSettingsSection("home");setAccountEditField(null);}}><MoreVertical/></button></div></div>
   <div className="tg-profile-identity">
-   <div className="mobile-profile-avatar">{(profileName||"Г").trim().slice(0,1).toUpperCase()}</div>
+   <div className="tg-profile-avatar-wrap"><div className="mobile-profile-avatar">{(profileName||"Г").trim().slice(0,1).toUpperCase()}</div></div>
    <div className="tg-profile-name">{profileName||"Пользователь"}</div>
-   <div className="tg-profile-username">{profileUsername?"@"+profileUsername:"Имя пользователя не задано"}</div>
    <div className="tg-profile-online"><i/> в сети</div>
-   {profileBio&&<p className="tg-profile-bio">{profileBio}</p>}
+   <div className="tg-profile-actions">
+    <button onClick={()=>{setActionError("");setSettingsSection("account");setAccountEditField(null);setMobileTab("settings");}}><Pencil/><span>Изменить</span></button>
+    <button onClick={()=>{setMobileTab("settings");setSettingsSection("home");setAccountEditField(null);}}><Settings/><span>Настройки</span></button>
+   </div>
   </div>
-  <div className="tg-profile-group">
-   <button className="tg-profile-row" onClick={()=>openAccountEditor("name")}><span><small>Имя</small><b>{profileName||"Добавить имя"}</b></span><Pencil/></button>
-   <button className="tg-profile-row" onClick={()=>openAccountEditor("username")}><span><small>Имя пользователя</small><b>{profileUsername?"@"+profileUsername:"Добавить имя пользователя"}</b></span><Pencil/></button>
-   <button className="tg-profile-row" onClick={()=>openAccountEditor("bio")}><span><small>О себе</small><b>{profileBio||"Добавить информацию о себе"}</b></span><Pencil/></button>
-   <button className="tg-profile-row" onClick={()=>{if(topgramId)void navigator.clipboard?.writeText(topgramId);}}><span><small>Номер TopGram</small><b>{topgramId||"Загружается…"}</b></span><BadgeCheck/></button>
+  <div className="tg-profile-info-card">
+   <div className="tg-profile-info-row"><span><small>Номер TopGram</small><b>{topgramId||"Загружается…"}</b></span><button className="tg-copy-id" aria-label="Скопировать номер" onClick={()=>{if(topgramId)void navigator.clipboard?.writeText(topgramId);}}><icon/></button></div>
+   <button className="tg-profile-info-row" onClick={()=>openAccountEditor("bio")}><span><small>О себе</small><b>{profileBio||"Добавить информацию о себе"}</b></span><Pencil/></button>
+   <button className="tg-profile-info-row" onClick={()=>openAccountEditor("username")}><span><small>Имя пользователя</small><b>{profileUsername?"@"+profileUsername:"Добавить имя пользователя"}</b></span><Pencil/></button>
+   <button className="tg-profile-info-row" onClick={()=>openAccountEditor("name")}><span><small>Имя</small><b>{profileName||"Добавить имя"}</b></span><Pencil/></button>
   </div>
-  <div className="tg-profile-caption">Настройки</div>
-  <div className="tg-profile-group">
-   <button className="tg-profile-row" onClick={()=>openSettingsSection("notifications")}><span><b>Уведомления и звуки</b></span><MoreVertical/></button>
-   <button className="tg-profile-row" onClick={()=>openSettingsSection("privacy")}><span><b>Конфиденциальность</b></span><MoreVertical/></button>
-   <button className="tg-profile-row" onClick={()=>openSettingsSection("storage")}><span><b>Данные и память</b></span><MoreVertical/></button>
-   <button className="tg-profile-row" onClick={()=>openSettingsSection("chats")}><span><b>Настройки чатов</b></span><MoreVertical/></button>
-   <button className="tg-profile-row" onClick={()=>openSettingsSection("folders")}><span><b>Папки с чатами</b></span><MoreVertical/></button>
-  </div>
-  <div className="tg-profile-caption">TopGram</div>
-  <div className="tg-profile-group">
-   <button className="tg-profile-row" onClick={()=>openSettingsSection("gifts")}><span><b>Подарки</b><small>Коллекция подарков</small></span><Gift/></button>
-   <button className="tg-profile-row" onClick={()=>openSettingsSection("stars")}><span><b>Звёзды</b><small>Баланс и история</small></span><Star/></button>
-  </div>
+  <div className="tg-profile-tabs"><button className="active">Публикации</button><button disabled>Архив публикаций</button></div>
+  <div className="tg-profile-empty"><div className="tg-profile-empty-icon"><Bookmark/></div><b>Здесь пока нет публикаций</b><p>Фото и видео, которыми ты делишься в профиле, будут отображаться здесь</p></div>
   {topgramId==="+7770349"&&<button className="admin-mobile-entry" onClick={()=>{setAdminOpen(true);setAdminTab("users");setAdminError("");setAdminMessage("");}}>Панель администратора</button>}
  </section>}{mobileTab==="settings"&&<section className="mobile-settings-screen"><div className="mobile-top-actions">{settingsSection!=="home"&&<button className="icon-btn" onClick={()=>settingsSection==="account"&&accountEditField?cancelAccountEdit():setSettingsSection("home")}><ArrowLeft/></button>}<b>{(settingsSection==="account"&&accountEditField?({name:"Имя",username:"Имя пользователя",bio:"О себе"} as const)[accountEditField]:({home:"Настройки",account:"Аккаунт",chats:"Настройки чатов",privacy:"Конфиденциальность",notifications:"Уведомления",storage:"Данные и память",folders:"Папки с чатами",stars:"Звёзды TopGram",gifts:"Подарки"} as const)[settingsSection])}</b><button className="icon-btn" onClick={()=>settingsSection==="account"&&accountEditField?setAccountEditField(null):setSettingsSection("home")}><MoreVertical/></button></div>{settingsSection==="home"?<><div className="mobile-settings-card"><button onClick={()=>{setActionError("");setSettingsSection("account");}}><span className="settings-icon blue"><Users/></span><span><b>Аккаунт</b><small>Номер, имя пользователя, «О себе»</small></span></button><button onClick={()=>openSettingsSection("chats")}><span className="settings-icon orange"><MessageCircle/></span><span><b>Настройки чатов</b><small>Оформление, тема и анимации</small></span></button><button onClick={()=>openSettingsSection("privacy")}><span className="settings-icon green"><Settings/></span><span><b>Конфиденциальность</b><small>Видимость и отметки прочтения</small></span></button><button onClick={()=>openSettingsSection("notifications")}><span className="settings-icon red"><Radio/></span><span><b>Уведомления</b><small>Оповещения и звуки</small></span></button><button onClick={()=>openSettingsSection("storage")}><span className="settings-icon violet"><Bookmark/></span><span><b>Данные и память</b><small>Автозагрузка и использование</small></span></button><button onClick={()=>openSettingsSection("folders")}><span className="settings-icon blue"><Users/></span><span><b>Папки с чатами</b><small>Фильтры и разделы списка чатов</small></span></button></div><div className="mobile-settings-card"><button onClick={()=>openSettingsSection("stars")}><span className="settings-icon blue"><Star/></span><span><b>Звёзды TopGram</b><small>Баланс: {starsBalance}</small></span></button><button onClick={()=>openSettingsSection("gifts")}><span className="settings-icon orange"><Gift/></span><span><b>Подарки</b><small>Каталог подарков TopGram</small></span></button></div>{topgramId==="+7770349"&&<div className="mobile-settings-card"><button onClick={()=>{setAdminOpen(true);setAdminTab("users");setAdminError("");setAdminMessage("");}}><span className="settings-icon blue"><Settings/></span><span><b>Панель администратора</b><small>Управление пользователями и статистика</small></span></button></div>}</>:null}{settingsSection==="account"&&<div className="account-settings-page">
  {accountEditField===null?<>
