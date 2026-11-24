@@ -1194,3 +1194,73 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .mobile-nav-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
 
 .tg-profile-identity .mobile-profile-avatar:has(img):after{display:none!important;}
+
+/* Telegram-style dark appearance for every settings subpage */
+.mobile-settings-screen,
+.mobile-settings-screen .account-settings-page,
+.mobile-settings-screen .privacy-page,
+.mobile-settings-screen .settings-page,
+.mobile-settings-screen .settings-content{
+  background:#17212b!important;
+  color:#f4f7fa!important;
+}
+.mobile-settings-screen .mobile-top-actions{
+  background:#17212b!important;
+  color:#f4f7fa!important;
+  border-color:#263746!important;
+}
+.mobile-settings-screen .mobile-top-actions .icon-btn,
+.mobile-settings-screen .mobile-top-actions button{
+  color:#f4f7fa!important;
+}
+.mobile-settings-screen .mobile-settings-card,
+.mobile-settings-screen .account-settings-rows,
+.mobile-settings-screen .account-settings-form,
+.mobile-settings-screen .account-settings-editor,
+.mobile-settings-screen .privacy-group,
+.mobile-settings-screen .settings-group,
+.mobile-settings-screen .settings-section,
+.mobile-settings-screen .settings-card{
+  background:#202c38!important;
+  color:#f4f7fa!important;
+  border-color:#2b3a49!important;
+}
+.mobile-settings-screen .mobile-settings-card>button,
+.mobile-settings-screen .settings-toggle-row,
+.mobile-settings-screen .settings-folder-row,
+.mobile-settings-screen .account-settings-row,
+.mobile-settings-screen .privacy-row,
+.mobile-settings-screen .settings-choice-row,
+.mobile-settings-screen .mobile-settings-card button{
+  background:transparent!important;
+  color:#f4f7fa!important;
+  border-color:#2b3a49!important;
+}
+.mobile-settings-screen .mobile-settings-card b,
+.mobile-settings-screen .account-settings-row b,
+.mobile-settings-screen .privacy-name,
+.mobile-settings-screen label,
+.mobile-settings-screen h1,
+.mobile-settings-screen h2,
+.mobile-settings-screen h3{
+  color:#f4f7fa!important;
+}
+.mobile-settings-screen .mobile-settings-card small,
+.mobile-settings-screen .account-settings-row small,
+.mobile-settings-screen .privacy-value,
+.mobile-settings-screen .settings-description,
+.mobile-settings-screen .settings-subtitle{
+  color:#8b9aa7!important;
+}
+.mobile-settings-screen input,
+.mobile-settings-screen textarea,
+.mobile-settings-screen select{
+  background:#17212b!important;
+  color:#f4f7fa!important;
+  border-color:#344657!important;
+}
+.mobile-settings-screen .settings-toggle-row:active,
+.mobile-settings-screen .account-settings-row:active,
+.mobile-settings-screen .privacy-row:active{
+  background:#263746!important;
+}
