@@ -525,3 +525,17 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
   .messages-area{background-size:32px 32px,44px 44px}
   .bubble{max-width:88%;font-size:14px}
 }
+
+
+/* Message context actions and inline editing */
+.message-tools{display:flex;justify-content:flex-end;gap:3px;margin-top:4px;opacity:.72;transition:opacity .15s}
+.message-line:hover .message-tools,.message-tools:focus-within{opacity:1}
+.message-action{width:27px;height:25px;display:grid;place-items:center;border:0;border-radius:7px;background:#ffffff12;color:#c4d2df;cursor:pointer}
+.message-action:hover{background:#ffffff24;color:#fff}
+.message-action.danger:hover{background:#a63d4a;color:#fff}
+.message-action.confirm{background:#3390ec;color:white}
+.message-action:disabled{opacity:.45;cursor:not-allowed}
+.message-edit-form{display:flex;flex-direction:column;gap:7px;min-width:min(340px,65vw)}
+.message-edit-form textarea{width:100%;min-height:64px;max-height:180px;resize:vertical;border:1px solid #5689b3;border-radius:9px;padding:8px;background:#101a24;color:#e9edef;font:inherit;font-size:14px;outline:none}
+.message-edit-actions{display:flex;justify-content:flex-end;gap:5px}
+@media(max-width:650px){.message-tools{opacity:1}.message-edit-form{min-width:min(260px,70vw)}}
