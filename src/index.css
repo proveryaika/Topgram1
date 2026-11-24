@@ -1632,3 +1632,5 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .conversation-header .header-actions{display:flex!important;visibility:visible!important;flex:0 0 auto}
 .conversation-header .header-actions .icon-btn:nth-child(2){display:grid!important;visibility:visible!important}
 .conversation-header .header-actions .icon-btn{flex:0 0 38px}
+
+.topgram-notifications-avatar{width:100%;height:100%;display:block;object-fit:cover;border-radius:inherit}
