@@ -840,3 +840,21 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .admin-market-release{display:flex;gap:5px;align-items:center;flex-wrap:wrap}.admin-market-release input{width:76px;min-width:0;height:34px;padding:0 7px;border:1px solid #34495c;border-radius:8px;background:#101a24;color:#e9edef;font-size:11px}.admin-market-release button{min-height:34px;padding:6px 9px;border:1px solid #2c805f;border-radius:8px;background:#174b3b;color:#c4f4dd;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap}.admin-market-release button:disabled{opacity:.5;cursor:not-allowed}.admin-gift-row{gap:8px}:root[data-theme="light"] .admin-market-release input{background:#fff;border-color:#d6e0e8;color:#18212b}:root[data-theme="light"] .admin-market-release button{background:#e4f5ed;color:#176246;border-color:#b9e2ce}@media(max-width:650px){.admin-market-release{width:100%;padding-left:52px}.admin-market-release input{flex:1;width:60px}}
 
 .gift-inventory-row.gift-inventory-upgraded{border:1px solid rgba(211,174,89,.55);background:linear-gradient(120deg,rgba(177,135,45,.12),transparent)}.gift-serial{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:7px;background:rgba(202,164,74,.18);color:#d5b15f;font-size:10px;font-style:normal;font-weight:700}.gift-upgrade-button{display:inline-flex;margin-top:7px;padding:6px 10px;border:1px solid #a9873e;border-radius:8px;background:rgba(175,137,55,.16);color:inherit;font-size:11px;font-weight:700;cursor:pointer}.gift-upgrade-button:disabled{opacity:.45;cursor:not-allowed}
+
+.account-settings-page{padding:18px 18px 32px;max-width:620px;margin:0 auto}
+.account-settings-hero{display:flex;align-items:center;gap:16px;padding:12px 4px 24px}
+.account-settings-avatar{width:76px;height:76px;flex:none;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#62c5e7,#438de0);color:#fff;font-size:30px;font-weight:700;box-shadow:0 8px 24px #248bd533}
+.account-settings-hero>div:last-child{display:flex;flex-direction:column;gap:6px;min-width:0}
+.account-settings-hero b{font-size:20px;font-weight:650}
+.account-settings-hero span{font-size:13px;color:var(--muted,#8b9baa)}
+.account-settings-form{display:flex;flex-direction:column;gap:0;border-radius:16px;overflow:hidden;background:var(--panel,#202c38);border:1px solid var(--border,#2d4051)}
+.account-settings-group{display:flex;flex-direction:column;gap:8px;padding:16px;border-bottom:1px solid var(--border,#2d4051)}
+.account-settings-group label{font-size:12px;font-weight:650;color:var(--accent,#65b8f4)}
+.account-settings-group input,.account-settings-group textarea{width:100%;border:0;outline:0;background:transparent;color:var(--text,#e9edef);font:inherit;font-size:15px;resize:vertical}
+.account-settings-group textarea{min-height:76px}
+.account-settings-group small{font-size:11px;line-height:1.45;color:var(--muted,#8b9baa)}
+.account-username-input{display:flex;align-items:center;gap:5px}
+.account-username-input span{font-size:15px;color:var(--muted,#8b9baa)}
+.account-id-row b{font-size:15px;color:var(--text,#e9edef)}
+.account-save-button{margin:14px 16px 16px;width:calc(100% - 32px)}
+.account-settings-note{padding:0 4px;font-size:11px;line-height:1.5;color:var(--muted,#8b9baa)}
