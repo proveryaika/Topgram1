@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 // These are public client settings, not service-role credentials.
 const url = (import.meta.env.VITE_SUPABASE_URL as string | undefined) || "https://wcaribszxpmiqwbzgtke.supabase.co";
@@ -6,13 +7,13 @@ const key = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined) || "s
 
 export const isSupabaseConfigured = Boolean(url && key && !url.includes("YOUR_PROJECT"));
 export const defaultSupabaseStorageKey = `sb-${new URL(url).hostname.split(".")[0]}-auth-token`;
-const clients = new Map<string, ReturnType<typeof createClient>>();
+const clients = new Map<string, SupabaseClient<any>>();
 const storedActiveKey = typeof localStorage !== "undefined" ? localStorage.getItem("topgram-active-auth-key") : null;
 
 function clientFor(storageKey: string) {
   let client = clients.get(storageKey);
   if (!client && isSupabaseConfigured) {
-    client = createClient(url, key, { auth: { storageKey, persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+    client = createClient<any>(url, key, { auth: { storageKey, persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
     clients.set(storageKey, client);
   }
   return client ?? null;
