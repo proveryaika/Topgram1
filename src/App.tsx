@@ -11,6 +11,19 @@ type Message = { id: string; chatId: string; text: string; mine: boolean; time: 
 const palette = ["#6879df", "#399b8d", "#c27a53", "#9569bf", "#477eaa", "#b66d88"];
 const timeLabel = (value?: string) => value ? new Date(value).toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"}) : "";
 
+const giftEmojiForTitle = (title:string) => {
+ const value=title.toLocaleLowerCase("ru-RU");
+ const rules:[RegExp,string][]=[
+  [/кот|кошка|cat/,"🐱"],[/собак|пёс|щен|dog/,"🐶"],[/сердц|heart/,"❤️"],[/звезд|star/,"⭐"],[/корон|crown/,"👑"],[/цвет|роз|букет|flower|rose/,"💐"],[/подар|короб|gift/,"🎁"],[/луна|месяц|moon/,"🌙"],[/солнц|sun/,"☀️"],[/огон|плам|fire/,"🔥"],[/алмаз|бриллиант|diamond/,"💎"],[/кольц|ring/,"💍"],[/медвед|bear/,"🧸"],[/заяц|кролик|rabbit/,"🐰"],[/лиса|fox/,"🦊"],[/бабоч|butterfly/,"🦋"],[/машин|авто|car/,"🚗"],[/самол|plane/,"✈️"],[/кораб|ship/,"🚢"],[/торт|пирог|cake/,"🎂"],[/шар|balloon/,"🎈"],[/корона|king/,"👑"],[/молни|lightning/,"⚡"],[/кристалл|crystal/,"🔮"],[/космос|планет|planet|space/,"🪐"],[/кофе|coffee/,"☕"],[/музык|music|нота/,"🎵"]
+ ];
+ return rules.find(([pattern])=>pattern.test(value))?.[1]??"🎁";
+};
+const giftImageForTitle = (title:string) => {
+ const emoji=giftEmojiForTitle(title);
+ const code=Array.from(emoji).map(char=>char.codePointAt(0)!.toString(16)).filter(part=>part!=="fe0f").join("-");
+ return "https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/72x72/"+code+".png";
+};
+
 
 function Avatar({chat,size="normal"}:{chat:Chat;size?:"normal"|"small"}) { return <div className={`avatar ${size}`} style={{background:chat.color}}>{chat.id==="topgram-notifications" ? <img className="topgram-notifications-avatar" src={topgramNotificationsAvatar} alt="TopGram"/> : chat.kind==="channel" ? <Radio/> : chat.kind==="group" ? <Users/> : chat.name.slice(0,1).toUpperCase()}{chat.online&&<i/>}</div>; }
 
