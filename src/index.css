@@ -807,3 +807,16 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 :root[data-theme="light"] .settings-icon{color:#fff}
 :root[data-theme="light"] .mobile-settings-card>button:not(.settings-toggle-row){color:#18212b;border-color:#edf0f3}
 :root[data-theme="light"] .mobile-top-actions .icon-btn{color:#536574}
+
+/* Admin controls: gift editing and issuing */
+.admin-gift-edit,.admin-secondary{min-height:34px;padding:7px 10px;border:1px solid #3a5268;border-radius:9px;background:#22384b;color:#b9dcf5;font-size:10px;font-weight:650;white-space:nowrap;cursor:pointer}
+.admin-secondary{width:100%;margin-top:2px}
+.admin-gift-drop-card{display:flex;flex-direction:column;gap:10px}
+.admin-gift-drop-card .admin-operation-row{display:grid;grid-template-columns:minmax(0,1fr) 90px;gap:8px}
+.admin-gift-drop-card .modal-input{min-width:0;height:42px;padding:0 10px;border:1px solid #34495c;border-radius:10px;background:#101a24;color:#e9edef}
+.admin-gift-drop-card select{width:100%}
+.admin-gift-row{flex-wrap:wrap}
+.admin-gift-copy{flex:1 1 150px}
+:root[data-theme="light"] .admin-gift-edit,:root[data-theme="light"] .admin-secondary{background:#edf5fb;border-color:#cbdde9;color:#23658e}
+:root[data-theme="light"] .admin-gift-drop-card .modal-input{background:#fff;border-color:#d6e0e8;color:#18212b}
+@media(max-width:650px){.admin-gift-row{align-items:flex-start}.admin-gift-drop-card .admin-operation-row{grid-template-columns:minmax(0,1fr) 76px}.admin-gift-edit{margin-left:auto}}
