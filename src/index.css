@@ -233,3 +233,5 @@ kbd{display:none}
  .mobile-bottom-nav button.active{background:#263f56;color:#58b8f5}
  .mobile-bottom-nav button.active span{color:#58b8f5}
 }
+
+.admin-mobile-entry{width:100%;margin-top:12px;padding:15px 18px;border:1px solid #31516a;border-radius:16px;background:#20364a;color:#70c5ff;font-size:14px;font-weight:700}
