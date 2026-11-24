@@ -156,6 +156,8 @@ export default function App() {
    <div className="tg-profile-identity">
     <div className="tg-profile-avatar-wrap"><div className="mobile-profile-avatar">{profileAvatar?<img src={profileAvatar} alt="Фото профиля"/>:(profileName||"Г").trim().slice(0,1).toUpperCase()}</div></div>
     <div className="tg-profile-name">{profileName||"Пользователь"}</div>
+    {profileUsername&&<div className="tg-profile-username">@{profileUsername}</div>}
+    {profileBio&&<div className="tg-profile-bio">{profileBio}</div>}
     <div className="tg-profile-online">в сети</div>
     <input className="tg-profile-photo-input" type="file" accept="image/*" onChange={e=>{chooseProfilePhoto(e.target.files?.[0]);e.currentTarget.value="";}}/>
     <div className="tg-profile-actions">
@@ -189,7 +191,7 @@ export default function App() {
   <section className="tg-account-card tg-name-card"><h3>Ваше имя</h3><input value={firstName} onChange={e=>setFirstName(e.target.value)} placeholder="Имя" maxLength={64}/><div className="tg-account-divider"/><input value={lastName} onChange={e=>setLastName(e.target.value)} placeholder="Фамилия" maxLength={64}/></section>
   <section className="tg-account-bio"><textarea value={profileBio} onChange={e=>setProfileBio(e.target.value.slice(0,140))} placeholder="«О себе»" maxLength={140}/><span>{140-profileBio.length}</span></section><p className="tg-account-hint">Напишите немного о себе.</p>
   <section className="tg-account-card tg-about-card"><h3>Информация о Вас</h3>
-   <button type="button" className="tg-account-info-row" onClick={()=>{setPhoneChangeValue(user?.phone??"");setPhoneChangeStage("phone");setPhoneChangeCode("");setPhoneChangeOpen(true);setActionError("");}}><span className="tg-account-emoji phone">☎</span><div><b>{user?.phone||"Номер не указан"}</b><small>Нажмите, чтобы изменить номер телефона</small></div><span className="tg-account-chevron">›</span></button>
+   <div className="tg-account-info-row"><span className="tg-account-emoji phone">☎</span><div><b>{topgramId||user?.phone||"Номер не указан"}</b><small>Номер, привязанный к аккаунту TopGram</small></div></div>
    <div className="tg-account-info-row tg-account-username-row"><span className="tg-account-emoji at">@</span><div><input value={profileUsername.replace(/^@/,"")} onChange={e=>setProfileUsername(e.target.value.replace(/^@/,""))} placeholder="Имя пользователя" maxLength={32}/><small>Имя пользователя</small></div></div>
    <button type="button" className="tg-account-info-row" onClick={openBirthdayPicker}><span className="tg-account-emoji cake">♟</span><div><b>{birthday?new Date(birthday+"T12:00:00").toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"}):"Указать день рождения"}</b></div></button>
   </section><p className="tg-account-hint tg-birthday-hint">Ваш день рождения могут видеть только контакты. <button type="button" onClick={()=>{setSettingsSection("privacy");setPrivacyDialog("birthdayVisibility");}}>Изменить ›</button></p>
