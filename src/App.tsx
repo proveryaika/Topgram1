@@ -63,15 +63,15 @@ export default function App() {
  async function openDirectContact(peerId:string){if(!supabase||!user)return;const existing=chats.find(c=>c.kind==="direct"&&c.peerId===peerId);if(existing){setActiveId(existing.id);setMobileTab("chats");setMobileChat(true);return;}setBusy(true);setActionError("");try{const {data:conversationId,error}=await supabase.rpc("tg_open_direct_conversation",{p_peer_id:peerId});if(error)throw error;if(typeof conversationId!=="string")throw new Error("Не удалось создать переписку.");await loadWorkspace(user);setActiveId(conversationId);setMobileTab("chats");setMobileChat(true);}catch(error){setActionError(error instanceof Error?error.message:"Не удалось открыть переписку.");}finally{setBusy(false);}}
  async function sendContactRequest(e:FormEvent){e.preventDefault();if(!supabase||!user)return;const username=newUsername.trim().replace(/^@/,"").toLowerCase();if(!username){setActionError("Введи username пользователя.");return;}setBusy(true);setActionError("");try{const {data:profile,error:profileError}=await supabase.from("tg_profiles").select("id,username,display_name").eq("username",username).maybeSingle();if(profileError||!profile){setActionError("Пользователь не найден. Проверь username.");return;}if(profile.id===user.id){setActionError("Нельзя добавить самого себя.");return;}const {data:existing,error:existingError}=await supabase.from("tg_contact_requests").select("id,status").eq("requester_id",user.id).eq("recipient_id",profile.id);if(existingError)throw existingError;if(existing?.some((r:any)=>r.status==="accepted")){setActionError("Этот пользователь уже есть в контактах.");return;}const {error}=await supabase.from("tg_contact_requests").upsert({requester_id:user.id,recipient_id:profile.id,status:"accepted"},{onConflict:"requester_id,recipient_id"});if(error)throw error;setContactsVersion(v=>v+1);setContactMessage("@"+username+" добавлен в твои контакты.");setNewUsername("");setModal(null);}catch(error){setActionError(error instanceof Error?error.message:"Не удалось добавить контакт.");}finally{setBusy(false);}}
  async function loadWorkspace(current:User) {
-  if(!supabase)return;
-  const {data:members,error:memberError}=await supabase.from("tg_conversation_members").select("conversation_id, role").eq("user_id",current.id);
+  const db=supabase; if(!db)return;
+  const {data:members,error:memberError}=await db.from("tg_conversation_members").select("conversation_id, role").eq("user_id",current.id);
   if(memberError){console.error(memberError);return;}
   const ids=(members??[]).map((m:{conversation_id:string})=>m.conversation_id);
   if(!ids.length){setChats([]);setMessages([]);setActiveId("");return;}
   const [{data:conversations,error:convError},{data:allMembers,error:allMembersError},{data:blockedRows,error:blockedRowsError}]=await Promise.all([
-   supabase.from("tg_conversations").select("id,kind,title,created_at,public_username,invite_token,description,avatar_url,auto_delete_seconds").in("id",ids).order("created_at",{ascending:false}),
-   supabase.from("tg_conversation_members").select("conversation_id,user_id").in("conversation_id",ids),
-   supabase.from("tg_user_blocks").select("blocked_user_id").eq("blocker_id",current.id)
+   db.from("tg_conversations").select("id,kind,title,created_at,public_username,invite_token,description,avatar_url,auto_delete_seconds").in("id",ids).order("created_at",{ascending:false}),
+   db.from("tg_conversation_members").select("conversation_id,user_id").in("conversation_id",ids),
+   db.from("tg_user_blocks").select("blocked_user_id").eq("blocker_id",current.id)
   ]);
   if(convError||allMembersError||blockedRowsError){console.error(convError??allMembersError??blockedRowsError);return;}
   // Load newest messages per conversation in bounded batches, so active chats aren't
@@ -80,19 +80,19 @@ export default function App() {
   const conversationIds=(conversations??[]).map((c:{id:string})=>c.id);
   for(let offset=0;offset<conversationIds.length;offset+=8){
    const batch=conversationIds.slice(offset,offset+8);
-   const results=await Promise.all(batch.map(conversationId=>supabase.from("tg_messages").select("id,conversation_id,sender_id,body,created_at,attachment_path,attachment_name,attachment_type,attachment_size").eq("conversation_id",conversationId).order("created_at",{ascending:false}).limit(50)));
+   const results=await Promise.all(batch.map(conversationId=>db.from("tg_messages").select("id,conversation_id,sender_id,body,created_at,attachment_path,attachment_name,attachment_type,attachment_size").eq("conversation_id",conversationId).order("created_at",{ascending:false}).limit(50)));
    const failed=results.find(result=>result.error);
    if(failed?.error){console.error(failed.error);return;}
    results.forEach(result=>allMessages.push(...(result.data??[])));
   }
   const messageIds=allMessages.map((m:{id:string})=>m.id);
-  const {data:readRows,error:readRowsError}=messageIds.length?await supabase.from("tg_message_reads").select("message_id,reader_id").in("message_id",messageIds):{data:[],error:null};
+  const {data:readRows,error:readRowsError}=messageIds.length?await db.from("tg_message_reads").select("message_id,reader_id").in("message_id",messageIds):{data:[],error:null};
   if(readRowsError){console.error(readRowsError);return;}
   const chronologicalMessages=[...(allMessages??[])].reverse();
   const readByOthers=new Set((readRows??[]).filter((r:{message_id:string;reader_id:string})=>r.reader_id!==current.id).map((r:{message_id:string})=>r.message_id));
   const blockedIds=new Set((blockedRows??[]).map((r:{blocked_user_id:string})=>r.blocked_user_id));
   const others=[...new Set((allMembers??[]).filter((m:{user_id:string})=>m.user_id!==current.id).map((m:{user_id:string})=>m.user_id))];
-  const {data:profiles}=others.length?await supabase.from("tg_profiles").select("id,username,display_name,is_bot,bio,birthday").in("id",others):{data:[] as {id:string;username:string|null;display_name:string;is_bot:boolean}[]};
+  const {data:profiles}=others.length?await db.from("tg_profiles").select("id,username,display_name,is_bot,bio,birthday").in("id",others):{data:[] as {id:string;username:string|null;display_name:string;is_bot:boolean}[]};
   const profileMap=new Map((profiles??[]).map((p:{id:string;username:string|null;display_name:string;is_bot?:boolean;bio?:string|null;birthday?:string|null})=>[p.id,{...p,is_bot:Boolean(p.is_bot)}]));
   const memberMap=new Map<string,string[]>();
   (allMembers??[]).forEach((m:{conversation_id:string;user_id:string})=>memberMap.set(m.conversation_id,[...(memberMap.get(m.conversation_id)??[]),m.user_id]));
@@ -107,7 +107,7 @@ export default function App() {
   setChats(mapped);setMessages(chronologicalMessages.map((m:{id:string;conversation_id:string;sender_id:string;body:string;created_at:string;attachment_path?:string|null;attachment_name?:string|null;attachment_type?:string|null;attachment_size?:number|null})=>({id:m.id,chatId:m.conversation_id,text:m.body,mine:m.sender_id===current.id,time:timeLabel(m.created_at),read:readByOthers.has(m.id),attachmentPath:m.attachment_path??undefined,attachmentName:m.attachment_name??undefined,attachmentType:m.attachment_type??undefined,attachmentSize:m.attachment_size??undefined})));
   setActiveId(previous=>mapped.some(c=>c.id===previous)?previous:(mapped[0]?.id??""));
   setProfileName(current.user_metadata?.display_name??"Пользователь");
-  const {data:ownProfile}=await supabase.from("tg_profiles").select("username,display_name,bio,tg_id,first_name,last_name,birthday").eq("id",current.id).maybeSingle();
+  const {data:ownProfile}=await db.from("tg_profiles").select("username,display_name,bio,tg_id,first_name,last_name,birthday").eq("id",current.id).maybeSingle();
   if(ownProfile){setProfileUsername(ownProfile.username??"");setProfileName(ownProfile.display_name??"Пользователь");setProfileBio(ownProfile.bio??"");setTopgramId(ownProfile.tg_id??"");const parts=(ownProfile.display_name??"").trim().split(/\s+/);setFirstName(ownProfile.first_name??parts.shift()??"");setLastName(ownProfile.last_name??parts.join(" "));setBirthday(ownProfile.birthday??"");}
  }
  useEffect(()=>{if(!supabase||!user)return;const params=new URLSearchParams(window.location.search);const token=params.get("invite");const username=params.get("channel");if(!token&&!username)return;let alive=true;const joining=token?supabase.rpc("tg_join_channel_by_invite",{p_token:token}):supabase.rpc("tg_join_public_channel",{p_username:username});joining.then(async({data,error})=>{if(!alive)return;if(error){setActionError(error.message);return;}await loadWorkspace(user);if(typeof data==="string"){setActiveId(data);setMobileTab("chats");setMobileChat(true);}window.history.replaceState({},"",window.location.pathname);});return()=>{alive=false;};},[user]);
