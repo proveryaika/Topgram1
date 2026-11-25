@@ -95,8 +95,8 @@ export default function App() {
   const readByOthers=new Set((readRows??[]).filter((r:{message_id:string;reader_id:string})=>r.reader_id!==current.id).map((r:{message_id:string})=>r.message_id));
   const blockedIds=new Set((blockedRows??[]).map((r:{blocked_user_id:string})=>r.blocked_user_id));
   const others=[...new Set((allMembers??[]).filter((m:{user_id:string})=>m.user_id!==current.id).map((m:{user_id:string})=>m.user_id))];
-  const {data:profiles}=others.length?await db.from("tg_profiles").select("id,username,display_name,is_bot,bio,birthday").in("id",others):{data:[] as {id:string;username:string|null;display_name:string;is_bot:boolean}[]};
-  const profileMap=new Map((profiles??[]).map((p:{id:string;username:string|null;display_name:string;is_bot?:boolean;bio?:string|null;birthday?:string|null})=>[p.id,{...p,is_bot:Boolean(p.is_bot)}]));
+  const {data:profiles}=others.length?await db.from("tg_profiles").select("id,username,display_name,is_bot").in("id",others):{data:[] as {id:string;username:string|null;display_name:string;is_bot:boolean}[]};
+  const profileMap=new Map((profiles??[]).map((p:{id:string;username:string|null;display_name:string;is_bot?:boolean})=>[p.id,{...p,is_bot:Boolean(p.is_bot)}]));
   const memberMap=new Map<string,string[]>();
   (allMembers??[]).forEach((m:{conversation_id:string;user_id:string})=>memberMap.set(m.conversation_id,[...(memberMap.get(m.conversation_id)??[]),m.user_id]));
   const lastMap=new Map<string,{body:string;created_at:string;attachment_name?:string|null}>();
