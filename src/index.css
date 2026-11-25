@@ -1732,3 +1732,5 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 :root[data-theme="light"] .mobile-settings-card{background:#fff!important;color:#18212b!important;border-color:#e1e6eb!important}
 :root[data-theme="light"] .mobile-settings-card button{color:#18212b!important}
 :root[data-theme="light"] .mobile-settings-card small{color:#7a8793!important}
+
+.tg-flow-empty{margin:14px 16px;color:var(--muted,#8b98a5);font-size:13px;line-height:1.45;text-align:center}
