@@ -69,12 +69,13 @@ export default function App() {
   if(!ids.length){setChats([]);setMessages([]);setActiveId("");return;}
   const [{data:conversations,error:convError},{data:allMessages,error:msgError},{data:allMembers,error:allMembersError},{data:blockedRows,error:blockedRowsError},{data:readRows,error:readRowsError}]=await Promise.all([
    supabase.from("tg_conversations").select("id,kind,title,created_at,public_username,invite_token,description,avatar_url,auto_delete_seconds").in("id",ids).order("created_at",{ascending:false}),
-   supabase.from("tg_messages").select("id,conversation_id,sender_id,body,created_at,attachment_path,attachment_name,attachment_type,attachment_size").in("conversation_id",ids).order("created_at",{ascending:true}).limit(500),
+   supabase.from("tg_messages").select("id,conversation_id,sender_id,body,created_at,attachment_path,attachment_name,attachment_type,attachment_size").in("conversation_id",ids).order("created_at",{ascending:false}).limit(500),
    supabase.from("tg_conversation_members").select("conversation_id,user_id").in("conversation_id",ids),
    supabase.from("tg_user_blocks").select("blocked_user_id").eq("blocker_id",current.id),
    supabase.from("tg_message_reads").select("message_id,reader_id").limit(1000)
   ]);
   if(convError||msgError||allMembersError||blockedRowsError||readRowsError){console.error(convError??msgError??allMembersError??blockedRowsError??readRowsError);return;}
+  const chronologicalMessages=[...(allMessages??[])].reverse();
   const readByOthers=new Set((readRows??[]).filter((r:{message_id:string;reader_id:string})=>r.reader_id!==current.id).map((r:{message_id:string})=>r.message_id));
   const blockedIds=new Set((blockedRows??[]).map((r:{blocked_user_id:string})=>r.blocked_user_id));
   const others=[...new Set((allMembers??[]).filter((m:{user_id:string})=>m.user_id!==current.id).map((m:{user_id:string})=>m.user_id))];
@@ -83,14 +84,14 @@ export default function App() {
   const memberMap=new Map<string,string[]>();
   (allMembers??[]).forEach((m:{conversation_id:string;user_id:string})=>memberMap.set(m.conversation_id,[...(memberMap.get(m.conversation_id)??[]),m.user_id]));
   const lastMap=new Map<string,{body:string;created_at:string;attachment_name?:string|null}>();
-  (allMessages??[]).forEach((m:{conversation_id:string;body:string;created_at:string;attachment_name?:string|null})=>lastMap.set(m.conversation_id,{body:m.body,created_at:m.created_at,attachment_name:m.attachment_name}));
+  chronologicalMessages.forEach((m:{conversation_id:string;body:string;created_at:string;attachment_name?:string|null})=>lastMap.set(m.conversation_id,{body:m.body,created_at:m.created_at,attachment_name:m.attachment_name}));
   const mapped:Chat[]=(conversations??[]).filter((c:{id:string;kind:Kind;public_username?:string|null})=>{if(c.kind!=="direct")return true;const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id);return Boolean(otherId&&!blockedIds.has(otherId));}).map((c:{id:string;kind:Kind;title:string|null;created_at:string;public_username?:string|null},i:number)=>{
    const otherId=(memberMap.get(c.id)??[]).find(id=>id!==current.id); const profile=otherId?profileMap.get(otherId):null;
    const name=c.kind==="direct"?(profile?.display_name??"Новый контакт"):(c.title??(c.kind==="channel"?"Канал без названия":"Группа без названия"));
    const last=lastMap.get(c.id);
    return {id:c.id,name,handle:profile?.username?"@"+profile.username:(c.kind==="direct"?"Личная переписка":c.kind==="channel"?(c.public_username?"@"+c.public_username:"Канал"):"Группа"),preview:last?.attachment_name?(last.body||"📎 "+last.attachment_name):(last?.body??"Пока нет сообщений"),time:timeLabel(last?.created_at)||timeLabel(c.created_at),color:palette[i%palette.length],peerId:c.kind==="direct"?otherId:undefined,kind:c.kind,bio:profile?.bio??null,birthday:profile?.birthday??null};
   });
-  setChats(mapped);setMessages((allMessages??[]).map((m:{id:string;conversation_id:string;sender_id:string;body:string;created_at:string;attachment_path?:string|null;attachment_name?:string|null;attachment_type?:string|null;attachment_size?:number|null})=>({id:m.id,chatId:m.conversation_id,text:m.body,mine:m.sender_id===current.id,time:timeLabel(m.created_at),read:readByOthers.has(m.id),attachmentPath:m.attachment_path??undefined,attachmentName:m.attachment_name??undefined,attachmentType:m.attachment_type??undefined,attachmentSize:m.attachment_size??undefined})));
+  setChats(mapped);setMessages(chronologicalMessages.map((m:{id:string;conversation_id:string;sender_id:string;body:string;created_at:string;attachment_path?:string|null;attachment_name?:string|null;attachment_type?:string|null;attachment_size?:number|null})=>({id:m.id,chatId:m.conversation_id,text:m.body,mine:m.sender_id===current.id,time:timeLabel(m.created_at),read:readByOthers.has(m.id),attachmentPath:m.attachment_path??undefined,attachmentName:m.attachment_name??undefined,attachmentType:m.attachment_type??undefined,attachmentSize:m.attachment_size??undefined})));
   setActiveId(previous=>mapped.some(c=>c.id===previous)?previous:(mapped[0]?.id??""));
   setProfileName(current.user_metadata?.display_name??"Пользователь");
   const {data:ownProfile}=await supabase.from("tg_profiles").select("username,display_name,bio,tg_id,first_name,last_name,birthday").eq("id",current.id).maybeSingle();
