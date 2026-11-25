@@ -1844,3 +1844,10 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .mobile-settings-screen .privacy-row,.mobile-settings-screen .privacy-option{position:relative;pointer-events:auto;touch-action:manipulation;cursor:pointer;}
 .mobile-settings-screen .privacy-row>*{pointer-events:none}
 .mobile-settings-screen .privacy-row:active{background:rgba(80,160,230,.12)!important}
+
+/* Keep privacy dialogs above app navigation and ensure modal controls are tappable */
+.modal-backdrop{z-index:60!important;isolation:isolate;touch-action:auto}
+.modal-backdrop .privacy-dialog{position:relative;z-index:61;pointer-events:auto;touch-action:pan-y}
+.modal-backdrop .privacy-dialog button,.modal-backdrop .privacy-dialog input,.modal-backdrop .privacy-dialog label{pointer-events:auto;touch-action:manipulation}
+.mobile-settings-screen .privacy-page{isolation:isolate}
+.mobile-settings-screen .privacy-group{isolation:isolate}
