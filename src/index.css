@@ -1838,3 +1838,9 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .tg-search-skeleton-copy i:nth-child(3){width:24%}
 .tg-search-skeleton-avatar:after,.tg-search-skeleton-copy i:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.055),transparent);animation:tgSkeletonSweep 1.35s infinite}
 @keyframes tgSkeletonSweep{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+/* Privacy settings: reliable mobile tap targets */
+.mobile-settings-screen .privacy-page,.mobile-settings-screen .privacy-group{position:relative;z-index:1;pointer-events:auto}
+.mobile-settings-screen .privacy-row,.mobile-settings-screen .privacy-option{position:relative;pointer-events:auto;touch-action:manipulation;cursor:pointer;}
+.mobile-settings-screen .privacy-row>*{pointer-events:none}
+.mobile-settings-screen .privacy-row:active{background:rgba(80,160,230,.12)!important}
