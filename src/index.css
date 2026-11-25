@@ -1734,3 +1734,43 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 :root[data-theme="light"] .mobile-settings-card small{color:#7a8793!important}
 
 .tg-flow-empty{margin:14px 16px;color:var(--muted,#8b98a5);font-size:13px;line-height:1.45;text-align:center}
+
+
+/* Account screen rebuilt to match Telegram mobile proportions and icon treatment */
+.tg-account-page{max-width:560px!important;padding:8px 18px calc(36px + env(safe-area-inset-bottom))!important}
+.tg-account-card,.tg-account-bio{background:#1e2936!important;border-radius:26px!important;box-shadow:none!important}
+.tg-name-card{margin:8px 0 22px!important;padding:24px 0 10px!important}
+.tg-account-card h3{font-size:17px!important;margin:0 24px 18px!important;color:#72b7ed!important}
+.tg-name-card input{height:72px!important;padding:0 24px!important;font-size:21px!important}
+.tg-account-divider{margin-left:24px!important;background:#18232e!important}
+.tg-account-bio{min-height:72px!important;padding:12px 24px!important;border-radius:24px!important}
+.tg-account-bio textarea{font-size:21px!important;min-height:42px!important}
+.tg-account-hint{font-size:15px!important;line-height:1.45!important;margin:14px 24px 26px!important}
+.tg-about-card{padding:22px 0 10px!important}
+.tg-account-info-row{min-height:94px!important;gap:18px!important;padding:13px 24px!important}
+.tg-account-info-row b{font-size:20px!important;line-height:1.3!important}
+.tg-account-info-row small{font-size:15px!important;line-height:1.35!important}
+.tg-account-emoji{width:54px!important;height:54px!important;flex:0 0 54px!important;border-radius:16px!important}
+.tg-account-emoji svg{width:31px!important;height:31px!important;stroke-width:2.5!important}
+.tg-account-emoji.ai{font-size:18px!important}
+.tg-account-extra{margin-top:0!important;padding:8px 0!important}
+.tg-account-extra .tg-account-info-row{min-height:100px!important}
+.tg-account-switcher{margin-top:22px!important;padding:18px 0 12px!important}
+.tg-account-switcher-head{padding:0 22px 12px;display:flex;flex-direction:column;gap:8px}
+.tg-account-switcher-head h3{margin:0!important;color:#72b7ed!important;font-size:17px!important}
+.tg-account-switcher .tg-add-account{display:flex;align-items:center;gap:14px;padding:12px 0!important;color:#72b7ed!important;font-size:20px!important}
+.tg-account-current,.tg-account-saved-row{display:flex;align-items:center;gap:14px;padding:14px 22px!important;min-height:88px;color:#f5f7fa!important}
+.tg-account-saved-row{width:100%;border:0;background:transparent;text-align:left;cursor:pointer}
+.tg-account-current-name{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px}
+.tg-account-current-name b{font-size:19px;font-weight:500;overflow-wrap:anywhere}
+.tg-account-current-name small{font-size:14px;color:#8493a2}
+.tg-account-dot{width:54px!important;height:54px!important;flex:0 0 54px!important;border-radius:50%!important;display:grid;place-items:center;color:#fff;font-size:20px;background:linear-gradient(140deg,#65b9f5,#2e8fda)!important}
+.tg-account-dot.saved{background:linear-gradient(140deg,#81cf63,#3bb54b)!important}
+.tg-account-active-badge{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#299fe8;color:white;font-size:14px;font-weight:600;flex:none}
+.tg-account-current>svg,.tg-account-saved-row>svg{color:#8494a5;flex:none}
+.tg-account-logout{display:flex;align-items:center;gap:14px;min-height:78px;padding:18px 24px!important;margin:22px 0 10px!important;border-radius:24px!important;font-size:20px!important;background:#1e2936!important}
+.tg-account-logout svg{width:26px;height:26px}
+.tg-account-chevron{font-size:26px;color:#8494a5}
+:root[data-theme="light"] .tg-account-card,:root[data-theme="light"] .tg-account-bio,:root[data-theme="light"] .tg-account-logout{background:#fff!important}
+:root[data-theme="light"] .tg-account-current,:root[data-theme="light"] .tg-account-saved-row{color:#18212b!important}
+@media(max-width:650px){.tg-account-page{padding:8px 14px calc(32px + env(safe-area-inset-bottom))!important}.tg-account-info-row{min-height:88px!important;padding:12px 20px!important}.tg-account-emoji{width:50px!important;height:50px!important;flex-basis:50px!important}.tg-account-emoji svg{width:28px!important;height:28px!important}.tg-account-extra .tg-account-info-row{min-height:92px!important}}
