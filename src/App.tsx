@@ -234,7 +234,6 @@ export default function App() {
    <div className="tg-profile-identity">
     <div className="tg-profile-avatar-wrap"><div className="mobile-profile-avatar">{profileAvatar?<img src={profileAvatar} alt="Фото профиля"/>:(profileName||"Г").trim().slice(0,1).toUpperCase()}</div></div>
     <div className="tg-profile-name">{profileName||"Пользователь"}</div>
-    {profileUsername&&<button type="button" className="tg-profile-username tg-profile-username-tap" onClick={()=>setProfileUsernamePopup("regular")}>@{profileUsername}</button>}{ownedProfileCollectibles.length>0&&<button type="button" className="tg-profile-username tg-profile-collectible-tap" onClick={()=>setProfileUsernamePopup("collectible")}>@{ownedProfileCollectibles[0]}</button>}
     {profileBio&&<div className="tg-profile-bio">{profileBio}</div>}
     <div className="tg-profile-online">в сети</div>
     <input className="tg-profile-photo-input" type="file" accept="image/*" onChange={e=>{chooseProfilePhoto(e.target.files?.[0]);e.currentTarget.value="";}}/>
