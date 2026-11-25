@@ -70,7 +70,7 @@ export default function App() {
   if(!ids.length){setChats([]);setMessages([]);setActiveId("");return;}
   const [{data:conversations,error:convError},{data:allMembers,error:allMembersError},{data:blockedRows,error:blockedRowsError}]=await Promise.all([
    supabase.from("tg_conversations").select("id,kind,title,created_at,public_username,invite_token,description,avatar_url,auto_delete_seconds").in("id",ids).order("created_at",{ascending:false}),
-   supabase.from("tg_conversation_members").select("conversation_id,user_id").in("id",ids),
+   supabase.from("tg_conversation_members").select("conversation_id,user_id").in("conversation_id",ids),
    supabase.from("tg_user_blocks").select("blocked_user_id").eq("blocker_id",current.id)
   ]);
   if(convError||allMembersError||blockedRowsError){console.error(convError??allMembersError??blockedRowsError);return;}
