@@ -1869,3 +1869,13 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .tg-profile-popup-actions button{width:100%;min-height:52px;border:0;border-radius:14px;background:#2998e8;color:#fff;font-size:16px;font-weight:600}
 .tg-profile-popup-actions button+button{background:var(--panel,#263342);color:var(--text,#e9edef)}
 .tg-profile-popup-actions button:disabled{opacity:.6}
+
+/* Username layout: standard and collectible usernames share a compact Telegram-like row. */
+.tg-profile-usernames-group{min-height:72px;align-items:flex-start!important;}
+.tg-profile-usernames-group .tg-profile-usernames-label{display:flex!important;flex-direction:column;gap:7px!important;width:100%;}
+.tg-profile-usernames-label small{font-size:13px!important;color:var(--muted,#8a99a6)!important;}
+.tg-profile-usernames-list{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;}
+.tg-profile-usernames-list button{padding:0;border:0;background:transparent;font:inherit;font-size:16px;line-height:1.4;overflow-wrap:anywhere;cursor:pointer;}
+.tg-profile-regular-username{color:var(--text,#e9edef)!important;}
+.tg-profile-collectible-username{color:#2998e8!important;font-weight:600!important;}
+:root[data-theme="light"] .tg-profile-regular-username{color:#202c38!important;}
