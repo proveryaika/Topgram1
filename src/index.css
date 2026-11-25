@@ -1835,6 +1835,6 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .tg-search-skeleton-copy i{display:block;height:12px;border-radius:8px;background:#303342;position:relative;overflow:hidden}
 .tg-search-skeleton-copy i:nth-child(1){width:42%}
 .tg-search-skeleton-copy i:nth-child(2){width:78%}
-.tg-search-skeleton-copy i:nth-child(3){width:24%;position:absolute;right:16px;transform:translateY(-1px)}
+.tg-search-skeleton-copy i:nth-child(3){width:24%}
 .tg-search-skeleton-avatar:after,.tg-search-skeleton-copy i:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.055),transparent);animation:tgSkeletonSweep 1.35s infinite}
 @keyframes tgSkeletonSweep{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
