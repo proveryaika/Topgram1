@@ -6,7 +6,7 @@ import { activateSupabaseAccount, createSupabaseAccount, getActiveSupabaseStorag
 import topgramNotificationsAvatar from "../Неоновый логотип TopGram с короной.png";
 
 type Kind = "direct" | "group" | "channel";
-type Chat = { id: string; name: string; handle: string; preview: string; time: string; unread?: number; color: string; online?: boolean; peerId?: string; kind: Kind };
+type Chat = { id: string; name: string; handle: string; preview: string; time: string; unread?: number; color: string; online?: boolean; peerId?: string; kind: Kind; bio?: string; birthday?: string };
 type Message = { id: string; chatId: string; text: string; mine: boolean; time: string; read?: boolean; attachmentPath?: string; attachmentName?: string; attachmentType?: string; attachmentSize?: number };
 type SavedTopgramAccount = { storageKey: string; userId: string; label: string };
 const palette = ["#6879df", "#399b8d", "#c27a53", "#9569bf", "#477eaa", "#b66d88"];
