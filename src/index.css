@@ -1811,3 +1811,18 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
  .tg-profile-info-card{margin-bottom:16px!important}
  .tg-profile-tabs{overflow-x:auto;justify-content:flex-start;gap:18px;padding:0 12px!important}
 }
+
+/* Telegram-style search discovery panel */
+.tg-search-discovery{padding:10px 0 12px;background:var(--panel,#202331)}
+.tg-search-contacts,.tg-search-history{padding:8px 14px 12px}
+.tg-search-contacts h4,.tg-search-history h4{font-size:14px;font-weight:600;color:var(--muted,#8e9aab);margin:4px 0 12px}
+.tg-search-contact-strip{display:flex;gap:14px;overflow-x:auto;padding:0 0 6px;scrollbar-width:none}
+.tg-search-contact-strip::-webkit-scrollbar{display:none}
+.tg-search-contact-strip button{display:flex;align-items:center;flex-direction:column;gap:6px;min-width:56px;border:0;background:none;color:inherit;padding:0;cursor:pointer}
+.tg-search-contact-avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#68b8ed,#3386cf);color:white;font-size:19px;font-weight:600}
+.tg-search-contact-strip small{font-size:12px;max-width:64px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text,#f5f6fa)}
+.tg-search-history-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.tg-search-history-head h4{margin:0}
+.tg-search-history-head button{border:0;background:none;color:#69b8f1;font-size:13px;padding:6px}
+.tg-search-history .chat-search-result{border:0;border-radius:0;background:transparent;padding:10px 4px;min-height:62px;width:100%;border-bottom:1px solid rgba(130,145,165,.13)}
+.tg-search-history .chat-search-result>svg{opacity:.55}
