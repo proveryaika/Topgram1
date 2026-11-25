@@ -68,14 +68,16 @@ export default function App() {
   if(memberError){console.error(memberError);return;}
   const ids=(members??[]).map((m:{conversation_id:string})=>m.conversation_id);
   if(!ids.length){setChats([]);setMessages([]);setActiveId("");return;}
-  const [{data:conversations,error:convError},{data:allMessages,error:msgError},{data:allMembers,error:allMembersError},{data:blockedRows,error:blockedRowsError},{data:readRows,error:readRowsError}]=await Promise.all([
+  const [{data:conversations,error:convError},{data:allMessages,error:msgError},{data:allMembers,error:allMembersError},{data:blockedRows,error:blockedRowsError}]=await Promise.all([
    supabase.from("tg_conversations").select("id,kind,title,created_at,public_username,invite_token,description,avatar_url,auto_delete_seconds").in("id",ids).order("created_at",{ascending:false}),
    supabase.from("tg_messages").select("id,conversation_id,sender_id,body,created_at,attachment_path,attachment_name,attachment_type,attachment_size").in("conversation_id",ids).order("created_at",{ascending:false}).limit(500),
    supabase.from("tg_conversation_members").select("conversation_id,user_id").in("conversation_id",ids),
-   supabase.from("tg_user_blocks").select("blocked_user_id").eq("blocker_id",current.id),
-   supabase.from("tg_message_reads").select("message_id,reader_id").in("message_id",(allMessages??[]).map((m:{id:string})=>m.id))
+   supabase.from("tg_user_blocks").select("blocked_user_id").eq("blocker_id",current.id)
   ]);
-  if(convError||msgError||allMembersError||blockedRowsError||readRowsError){console.error(convError??msgError??allMembersError??blockedRowsError??readRowsError);return;}
+  if(convError||msgError||allMembersError||blockedRowsError){console.error(convError??msgError??allMembersError??blockedRowsError);return;}
+  const messageIds=(allMessages??[]).map((m:{id:string})=>m.id);
+  const {data:readRows,error:readRowsError}=messageIds.length?await supabase.from("tg_message_reads").select("message_id,reader_id").in("message_id",messageIds):{data:[],error:null};
+  if(readRowsError){console.error(readRowsError);return;}
   const chronologicalMessages=[...(allMessages??[])].reverse();
   const readByOthers=new Set((readRows??[]).filter((r:{message_id:string;reader_id:string})=>r.reader_id!==current.id).map((r:{message_id:string})=>r.message_id));
   const blockedIds=new Set((blockedRows??[]).map((r:{blocked_user_id:string})=>r.blocked_user_id));
