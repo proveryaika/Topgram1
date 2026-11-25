@@ -68,14 +68,24 @@ export default function App() {
   if(memberError){console.error(memberError);return;}
   const ids=(members??[]).map((m:{conversation_id:string})=>m.conversation_id);
   if(!ids.length){setChats([]);setMessages([]);setActiveId("");return;}
-  const [{data:conversations,error:convError},{data:allMessages,error:msgError},{data:allMembers,error:allMembersError},{data:blockedRows,error:blockedRowsError}]=await Promise.all([
+  const [{data:conversations,error:convError},{data:allMembers,error:allMembersError},{data:blockedRows,error:blockedRowsError}]=await Promise.all([
    supabase.from("tg_conversations").select("id,kind,title,created_at,public_username,invite_token,description,avatar_url,auto_delete_seconds").in("id",ids).order("created_at",{ascending:false}),
-   supabase.from("tg_messages").select("id,conversation_id,sender_id,body,created_at,attachment_path,attachment_name,attachment_type,attachment_size").in("conversation_id",ids).order("created_at",{ascending:false}).limit(500),
-   supabase.from("tg_conversation_members").select("conversation_id,user_id").in("conversation_id",ids),
+   supabase.from("tg_conversation_members").select("conversation_id,user_id").in("id",ids),
    supabase.from("tg_user_blocks").select("blocked_user_id").eq("blocker_id",current.id)
   ]);
-  if(convError||msgError||allMembersError||blockedRowsError){console.error(convError??msgError??allMembersError??blockedRowsError);return;}
-  const messageIds=(allMessages??[]).map((m:{id:string})=>m.id);
+  if(convError||allMembersError||blockedRowsError){console.error(convError??allMembersError??blockedRowsError);return;}
+  // Load newest messages per conversation in bounded batches, so active chats aren't
+  // starved by a single account-wide limit.
+  const allMessages: any[]=[];
+  const conversationIds=(conversations??[]).map((c:{id:string})=>c.id);
+  for(let offset=0;offset<conversationIds.length;offset+=8){
+   const batch=conversationIds.slice(offset,offset+8);
+   const results=await Promise.all(batch.map(conversationId=>supabase.from("tg_messages").select("id,conversation_id,sender_id,body,created_at,attachment_path,attachment_name,attachment_type,attachment_size").eq("conversation_id",conversationId).order("created_at",{ascending:false}).limit(50)));
+   const failed=results.find(result=>result.error);
+   if(failed?.error){console.error(failed.error);return;}
+   results.forEach(result=>allMessages.push(...(result.data??[])));
+  }
+  const messageIds=allMessages.map((m:{id:string})=>m.id);
   const {data:readRows,error:readRowsError}=messageIds.length?await supabase.from("tg_message_reads").select("message_id,reader_id").in("message_id",messageIds):{data:[],error:null};
   if(readRowsError){console.error(readRowsError);return;}
   const chronologicalMessages=[...(allMessages??[])].reverse();
