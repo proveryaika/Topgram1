@@ -1851,3 +1851,21 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .modal-backdrop .privacy-dialog button,.modal-backdrop .privacy-dialog input,.modal-backdrop .privacy-dialog label{pointer-events:auto;touch-action:manipulation}
 .mobile-settings-screen .privacy-page{isolation:isolate}
 .mobile-settings-screen .privacy-group{isolation:isolate}
+
+/* Telegram-like profile username and ID action sheets */
+.tg-profile-username-tap,.tg-profile-collectible-tap{display:block;padding:0;border:0;background:transparent;cursor:pointer}
+.tg-profile-collectible-tap{color:#2998e8!important;font-weight:600}
+.tg-profile-row-copy{width:19px;height:19px;flex:none;color:#8fa1af}
+.tg-profile-qr{width:22px;height:22px;flex:none}
+.tg-qr-mark{width:24px;height:24px}
+.tg-profile-popup-backdrop{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-end;justify-content:center;padding:12px;background:rgba(0,0,0,.52);touch-action:manipulation}
+.tg-profile-popup{width:min(100%,500px);padding:22px 20px calc(18px + env(safe-area-inset-bottom));border-radius:25px 25px 18px 18px;background:var(--panel-bg,#202c38);color:var(--text,#e9edef);box-shadow:0 12px 48px rgba(0,0,0,.32);text-align:center}
+.tg-profile-popup-icon{width:72px;height:72px;display:grid;place-items:center;margin:0 auto 14px;border-radius:50%;background:#2998e8;color:white}
+.tg-profile-popup-icon svg{width:34px;height:34px}
+.tg-profile-popup-title{font-size:17px;font-weight:650}
+.tg-profile-popup-value{margin:8px 0 18px;font-size:15px;color:var(--muted,#8fa1af);overflow-wrap:anywhere}
+.tg-profile-popup-value.blue{color:#2998e8;font-weight:650}
+.tg-profile-popup-actions{display:grid;gap:10px}
+.tg-profile-popup-actions button{width:100%;min-height:52px;border:0;border-radius:14px;background:#2998e8;color:#fff;font-size:16px;font-weight:600}
+.tg-profile-popup-actions button+button{background:var(--panel,#263342);color:var(--text,#e9edef)}
+.tg-profile-popup-actions button:disabled{opacity:.6}
