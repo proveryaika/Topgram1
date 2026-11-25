@@ -1714,3 +1714,21 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 :root[data-theme="light"] .peer-profile-menu-list{background:#fff}:root[data-theme="light"] .peer-profile-menu-list button{color:#18212b;border-color:#e2e7ec}
 
 .tg-collectible-market{padding:16px;display:flex;flex-direction:column;gap:14px}.tg-collectible-market>p{margin:0;color:var(--muted,#9ba5b5);font-size:14px;line-height:1.45}.tg-collectible-list{display:flex;flex-direction:column;gap:10px}.tg-collectible-list article{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border:1px solid var(--border,#333);border-radius:14px;background:var(--card,#1b1d22)}.tg-collectible-list article>div:first-child{display:flex;flex-direction:column;gap:5px;min-width:0}.tg-collectible-list b{font-weight:700}.tg-collectible-list small{color:var(--muted,#9ba5b5);font-size:12px}.tg-collectible-list button{border:0;border-radius:10px;background:#3390ec;color:#fff;padding:9px 12px;white-space:nowrap;font-weight:600}.tg-collectible-sell{display:flex;gap:6px;align-items:center}.tg-collectible-sell input{width:76px;min-width:0;border:1px solid var(--border,#444);border-radius:9px;padding:8px;background:var(--input,#20242a);color:inherit}.tg-collectible-market .notice{padding:10px;border-radius:10px;background:rgba(51,144,236,.12)}.tg-collectible-market>small{color:var(--muted,#9ba5b5);font-size:12px;line-height:1.4}
+
+/* Account screen theme consistency: Telegram-like light palette */
+:root[data-theme="light"] .mobile-settings-screen{background:#f1f3f5!important;color:#18212b!important}
+:root[data-theme="light"] .mobile-settings-screen>.mobile-top-actions{background:#f1f3f5!important;color:#18212b!important;border-bottom:1px solid #e1e6eb}
+:root[data-theme="light"] .tg-account-card,:root[data-theme="light"] .tg-account-bio,:root[data-theme="light"] .tg-account-logout,:root[data-theme="light"] .tg-birthday-sheet{background:#fff!important;color:#18212b!important;box-shadow:0 1px 3px #00000008}
+:root[data-theme="light"] .tg-account-page{color:#18212b!important}
+:root[data-theme="light"] .tg-account-card h3{color:#248bd0!important}
+:root[data-theme="light"] .tg-name-card input,:root[data-theme="light"] .tg-account-bio textarea,:root[data-theme="light"] .tg-account-info-row,:root[data-theme="light"] .tg-account-username-row input,:root[data-theme="light"] .tg-account-current{color:#18212b!important}
+:root[data-theme="light"] .tg-name-card input::placeholder,:root[data-theme="light"] .tg-account-bio textarea::placeholder,:root[data-theme="light"] .tg-account-username-row input::placeholder{color:#8b98a5!important}
+:root[data-theme="light"] .tg-account-divider{background:#e7ebef!important}
+:root[data-theme="light"] .tg-account-bio span,:root[data-theme="light"] .tg-account-hint,:root[data-theme="light"] .tg-account-info-row small,:root[data-theme="light"] .tg-account-current small,:root[data-theme="light"] .tg-birthday-wheel,:root[data-theme="light"] .tg-wheel-col{color:#7a8793!important}
+:root[data-theme="light"] .tg-account-info-row:active{background:#f3f6f8!important}
+:root[data-theme="light"] .tg-account-logout{color:#e05d68!important}
+:root[data-theme="light"] .tg-birthday-sheet header b,:root[data-theme="light"] .tg-wheel-col>div.selected{color:#18212b!important}
+:root[data-theme="light"] .tg-wheel-highlight{border-color:#c5d0d9!important}
+:root[data-theme="light"] .mobile-settings-card{background:#fff!important;color:#18212b!important;border-color:#e1e6eb!important}
+:root[data-theme="light"] .mobile-settings-card button{color:#18212b!important}
+:root[data-theme="light"] .mobile-settings-card small{color:#7a8793!important}
