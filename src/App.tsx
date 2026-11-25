@@ -96,7 +96,7 @@ export default function App() {
   const {data:ownProfile}=await supabase.from("tg_profiles").select("username,display_name,bio,tg_id,first_name,last_name,birthday").eq("id",current.id).maybeSingle();
   if(ownProfile){setProfileUsername(ownProfile.username??"");setProfileName(ownProfile.display_name??"Пользователь");setProfileBio(ownProfile.bio??"");setTopgramId(ownProfile.tg_id??"");const parts=(ownProfile.display_name??"").trim().split(/\s+/);setFirstName(ownProfile.first_name??parts.shift()??"");setLastName(ownProfile.last_name??parts.join(" "));setBirthday(ownProfile.birthday??"");}
  }
- useEffect(()=>{if(!user||!supabase)return;let alive=true;void (async()=>{try{await invokeBotFatherAction("ensure");if(alive)await loadWorkspace(user);}catch(error){console.error("BotFather initialization failed",error);if(alive)await loadWorkspace(user);}})();return()=>{alive=false;};},[user]);
+ useEffect(()=>{if(!user||!supabase)return;let alive=true;void (async()=>{try{await invokeBotFatherAction("ensure");if(alive)await loadWorkspace(user);}catch(error){console.error("BotFather initialization failed",error);if(alive){setActionError(error instanceof Error?error.message:"Не удалось открыть BotFather.");await loadWorkspace(user);}}})();return()=>{alive=false;};},[user]);
  useEffect(()=>{if(!supabase||!user)return;const params=new URLSearchParams(window.location.search);const token=params.get("invite");const username=params.get("channel");if(!token&&!username)return;let alive=true;const joining=token?supabase.rpc("tg_join_channel_by_invite",{p_token:token}):supabase.rpc("tg_join_public_channel",{p_username:username});joining.then(async({data,error})=>{if(!alive)return;if(error){setActionError(error.message);return;}await loadWorkspace(user);if(typeof data==="string"){setActiveId(data);setMobileTab("chats");setMobileChat(true);}window.history.replaceState({},"",window.location.pathname);});return()=>{alive=false;};},[user]);
  useEffect(()=>{if(!supabase||!user)return;let alive=true;supabase.from("tg_profiles").select("username,display_name,bio,tg_id,first_name,last_name,birthday").eq("id",user.id).maybeSingle().then(({data,error})=>{if(!alive||error||!data)return;setProfileUsername(data.username??"");setProfileName(data.display_name??"Пользователь");setProfileBio(data.bio??"");setTopgramId(data.tg_id??"");const parts=(data.display_name??"").trim().split(/\s+/);setFirstName(data.first_name??parts.shift()??"");setLastName(data.last_name??parts.join(" "));setBirthday(data.birthday??"");});return()=>{alive=false;};},[user]);
  useEffect(()=>{try{const saved=localStorage.getItem("topgram-settings-v1");if(saved)setSettingsPrefs(p=>({...p,...JSON.parse(saved)}));}catch{}},[]);
@@ -157,34 +157,51 @@ export default function App() {
  if(mfaLoginRequired)return <main className="auth-screen"><form className="auth-card" onSubmit={e=>{e.preventDefault();void verifyLoginMfa();}}><div className="brand-mark">t</div><div className="eyebrow">TOPGRAM SECURITY</div><h1>Подтверди вход</h1><p>Введи шестизначный код из приложения-аутентификатора.</p><input className="modal-input" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={mfaLoginCode} onChange={e=>setMfaLoginCode(e.target.value.replace(/\D/g,""))} placeholder="000000"/>{mfaLoginError&&<div className="error">{mfaLoginError}</div>}<button className="primary wide" disabled={mfaLoginBusy||mfaLoginCode.length!==6}>{mfaLoginBusy?"Проверяем…":"Подтвердить"}</button><button type="button" className="privacy-option" onClick={()=>void supabase?.auth.signOut()}>Выйти</button></form></main>;
  return <main className="app-shell">
  <aside className={`sidebar ${mobileChat?"hide-mobile":""} mobile-view-${mobileTab}`}><header className="side-header"><div className="brand"><span className="tg-wordmark">TopGram</span></div><button className="icon-btn tg-more-button" onClick={()=>{setActionError("");setModal("overflow");}} aria-label="Ещё"><MoreVertical/></button></header>
- <div className="search-box tg-search-box"><Search size={20}/><input placeholder="Поиск чатов, людей, ботов и каналов" value={query} onChange={e=>setQuery(e.target.value)}/></div>{query.trim().length>=1&&<div className="chat-search-results">{directorySearchBusy?<div className="search-result-hint">Ищем людей, ботов и каналы…</div>:directorySearchError?<div className="search-result-hint search-result-error">{directorySearchError}</div>:directorySearchResults.length?directorySearchResults.map(result=><button key={result.kind+result.id} className="chat-search-result" onClick={()=>void openSearchResult(result)}><span className={"search-result-avatar "+result.kind}>{result.kind==="channel"?<Radio/>:result.kind==="bot"?<Settings/>:result.display_name.slice(0,1).toUpperCase()}</span><span><b>{result.display_name}{result.kind==="bot"&&<small className="search-bot-tag">БОТ</small>}</b><small>{result.kind==="channel"?"Публичный канал":"@"+result.username}</small></span><MessageCircle/></button>):<div className="directory-empty"><svg className="directory-empty-duck" viewBox="0 0 240 220" role="img" aria-label="Утка-детектив ищет результаты">
- <ellipse cx="112" cy="204" rx="75" ry="9" fill="#d9e5ef" opacity=".65"/>
- <path d="M65 157Q72 133 102 132L143 139Q166 148 175 184L181 197H46L50 180Q53 166 65 157Z" fill="#70513e" stroke="#49372d" strokeWidth="4" strokeLinejoin="round"/>
- <path d="M84 151Q111 164 143 151L155 194H72Z" fill="#8e6a50"/>
- <path d="M105 157 117 173 130 157" fill="none" stroke="#e8d7bd" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
- <path d="M82 183 70 198M151 183 164 198" stroke="#49372d" strokeWidth="5" strokeLinecap="round"/>
- <path d="M80 195Q67 199 58 205H93Q101 199 97 195M151 195Q163 199 174 205H139Q132 199 136 195" fill="#ef9b32" stroke="#a95d20" strokeWidth="3" strokeLinejoin="round"/>
- <ellipse cx="112" cy="105" rx="65" ry="66" fill="#ffd84f" stroke="#d49a20" strokeWidth="4"/>
- <ellipse cx="65" cy="119" rx="15" ry="10" fill="#f7c83f"/>
- <path d="M64 110Q43 108 32 119Q47 133 68 127" fill="#f59a24" stroke="#bf6c19" strokeWidth="3" strokeLinejoin="round"/>
- <ellipse cx="94" cy="104" rx="12" ry="16" fill="#fff"/>
- <ellipse cx="133" cy="104" rx="12" ry="16" fill="#fff"/>
- <circle cx="98" cy="107" r="6.5" fill="#342b25"/>
- <circle cx="130" cy="107" r="6.5" fill="#342b25"/>
- <circle cx="100" cy="104" r="2" fill="#fff"/>
- <circle cx="132" cy="104" r="2" fill="#fff"/>
- <path d="M85 84Q96 77 106 83M123 82Q136 76 145 85" fill="none" stroke="#9a641e" strokeWidth="4" strokeLinecap="round"/>
- <path d="M105 130Q116 138 128 129" fill="none" stroke="#a85d1c" strokeWidth="3" strokeLinecap="round"/>
- <path d="M52 70Q52 49 74 43L84 24 106 39 132 19 145 46Q164 53 166 72Z" fill="#a96e42" stroke="#68452f" strokeWidth="4" strokeLinejoin="round"/>
- <path d="M83 43 88 27 105 40 132 20 143 47Q113 40 83 53Z" fill="#c58b59"/>
- <path d="M43 72Q105 56 174 72L178 84Q110 72 39 86Z" fill="#8c5937" stroke="#68452f" strokeWidth="4" strokeLinejoin="round"/>
- <path d="M69 62Q108 48 149 62" fill="none" stroke="#e2b17c" strokeWidth="3" strokeLinecap="round"/>
- <path d="M157 117 183 137" stroke="#76513b" strokeWidth="9" strokeLinecap="round"/>
- <circle cx="151" cy="111" r="29" fill="#d9f1ff" fillOpacity=".36" stroke="#76513b" strokeWidth="7"/>
- <circle cx="151" cy="111" r="22" fill="none" stroke="#fff" strokeOpacity=".75" strokeWidth="2"/>
- <path d="M137 96Q145 88 153 89" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round"/>
- <path d="M181 55 185 45M196 70 207 66M179 34 183 25" stroke="#e8b64b" strokeWidth="3" strokeLinecap="round"/>
- </svg><b>Нет результатов</b><span>По запросу &quot;{query.trim()}&quot; ничего не найдено.</span><small>Попробуйте другой запрос.</small></div>}</div>}
+ <div className="search-box tg-search-box"><Search size={20}/><input placeholder="Поиск чатов, людей, ботов и каналов" value={query} onChange={e=>setQuery(e.target.value)}/></div>{query.trim().length>=1&&<div className="chat-search-results">{directorySearchBusy?<div className="search-result-hint">Ищем людей, ботов и каналы…</div>:directorySearchError?<div className="search-result-hint search-result-error">{directorySearchError}</div>:directorySearchResults.length?directorySearchResults.map(result=><button key={result.kind+result.id} className="chat-search-result" onClick={()=>void openSearchResult(result)}><span className={"search-result-avatar "+result.kind}>{result.kind==="channel"?<Radio/>:result.kind==="bot"?<Settings/>:result.display_name.slice(0,1).toUpperCase()}</span><span><b>{result.display_name}{result.kind==="bot"&&<small className="search-bot-tag">БОТ</small>}</b><small>{result.kind==="channel"?"Публичный канал":"@"+result.username}</small></span><MessageCircle/></button>):<div className="directory-empty"><svg className="directory-empty-duck" viewBox="0 0 280 250" role="img" aria-label="Реалистичная утка-детектив ищет результаты">
+ <defs>
+  <linearGradient id="duck-feather" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#fff1a0"/><stop offset=".48" stopColor="#f4cb4e"/><stop offset="1" stopColor="#d99a25"/></linearGradient>
+  <linearGradient id="duck-coat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#9a7050"/><stop offset=".55" stopColor="#694832"/><stop offset="1" stopColor="#3e3028"/></linearGradient>
+  <linearGradient id="duck-hat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#bd8a5d"/><stop offset="1" stopColor="#65432f"/></linearGradient>
+  <linearGradient id="duck-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#fff" stopOpacity=".8"/><stop offset=".5" stopColor="#b9e5ff" stopOpacity=".16"/><stop offset="1" stopColor="#73b8e5" stopOpacity=".3"/></linearGradient>
+  <radialGradient id="duck-cheek"><stop offset="0" stopColor="#f39c63" stopOpacity=".55"/><stop offset="1" stopColor="#f39c63" stopOpacity="0"/></radialGradient>
+  <filter id="duck-shadow" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="4"/></filter>
+ </defs>
+ <ellipse cx="133" cy="230" rx="87" ry="10" fill="#17212b" opacity=".18" filter="url(#duck-shadow)"/>
+ <path d="M68 178Q77 151 113 147L158 151Q190 158 201 205L207 222H54L59 201Q60 187 68 178Z" fill="url(#duck-coat)" stroke="#473327" strokeWidth="3.5" strokeLinejoin="round"/>
+ <path d="M104 151Q127 165 159 151L177 218H82Z" fill="#806047" opacity=".9"/>
+ <path d="M112 157L130 184 148 157" fill="none" stroke="#e4d3b7" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+ <path d="M89 173Q78 190 78 215M172 171Q186 190 190 215" fill="none" stroke="#c29a72" strokeWidth="2" opacity=".7"/>
+ <path d="M94 190Q122 199 160 190" fill="none" stroke="#3e3028" strokeWidth="2" opacity=".6"/>
+ <path d="M91 215 79 228M170 215 183 228" stroke="#4c382a" strokeWidth="7" strokeLinecap="round"/>
+ <path d="M79 224Q66 229 59 237H102Q110 232 103 225M171 224Q185 229 195 237H151Q144 232 150 225" fill="#e98c2c" stroke="#a85b20" strokeWidth="3" strokeLinejoin="round"/>
+ <path d="M83 227Q91 230 100 227M157 227Q168 231 180 227" fill="none" stroke="#ffd27a" strokeWidth="2" strokeLinecap="round"/>
+ <ellipse cx="132" cy="111" rx="69" ry="75" fill="url(#duck-feather)" stroke="#c28c28" strokeWidth="3.5"/>
+ <path d="M80 125Q67 150 85 166Q101 175 113 154" fill="#eab83f" opacity=".8"/>
+ <path d="M67 116Q44 109 26 123Q43 142 75 133Q85 128 67 116Z" fill="#ed9a2e" stroke="#b9651c" strokeWidth="3" strokeLinejoin="round"/>
+ <path d="M30 123Q48 125 65 128" fill="none" stroke="#ffd078" strokeWidth="2" strokeLinecap="round"/>
+ <ellipse cx="97" cy="112" rx="16" ry="21" fill="#fffdf2"/>
+ <ellipse cx="145" cy="111" rx="16" ry="21" fill="#fffdf2"/>
+ <ellipse cx="103" cy="116" rx="8" ry="11" fill="#493a2b"/>
+ <ellipse cx="140" cy="115" rx="8" ry="11" fill="#493a2b"/>
+ <circle cx="106" cy="111" r="3.3" fill="#fff"/>
+ <circle cx="143" cy="110" r="3.3" fill="#fff"/>
+ <path d="M80 87Q95 77 110 85M130 83Q146 75 159 86" fill="none" stroke="#986a2b" strokeWidth="4.5" strokeLinecap="round"/>
+ <ellipse cx="82" cy="139" rx="19" ry="12" fill="url(#duck-cheek)"/>
+ <ellipse cx="158" cy="138" rx="18" ry="12" fill="url(#duck-cheek)"/>
+ <path d="M115 145Q131 154 146 143" fill="none" stroke="#a95e20" strokeWidth="2.5" strokeLinecap="round"/>
+ <path d="M65 73Q67 49 91 43L105 24 130 41 157 23 174 50Q194 56 198 78Z" fill="url(#duck-hat)" stroke="#553a2a" strokeWidth="4" strokeLinejoin="round"/>
+ <path d="M102 43L108 28 129 43 157 25 171 52Q139 46 101 57Z" fill="#d1a071" opacity=".65"/>
+ <path d="M53 76Q128 57 210 77L213 91Q128 77 49 91Z" fill="#704a33" stroke="#513726" strokeWidth="4" strokeLinejoin="round"/>
+ <path d="M76 70Q128 54 185 70" fill="none" stroke="#e0b98f" strokeWidth="3" strokeLinecap="round" opacity=".8"/>
+ <path d="M187 77 199 80" stroke="#d5b28a" strokeWidth="4" strokeLinecap="round"/>
+ <path d="M184 141 210 166" stroke="#62442f" strokeWidth="10" strokeLinecap="round"/>
+ <circle cx="177" cy="133" r="31" fill="url(#duck-glass)" stroke="#614633" strokeWidth="7"/>
+ <circle cx="177" cy="133" r="24" fill="none" stroke="#f5fbff" strokeOpacity=".8" strokeWidth="2"/>
+ <path d="M160 117Q169 106 181 108" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round" opacity=".85"/>
+ <path d="M166 152Q176 159 188 151" fill="none" stroke="#fff" strokeWidth="2" opacity=".5"/>
+ <path d="M218 47 223 35M234 66 247 62M212 25 215 16" stroke="#e8b64b" strokeWidth="3" strokeLinecap="round"/>
+ <path d="M42 57 35 50M30 77 18 77" stroke="#e8b64b" strokeWidth="2.5" strokeLinecap="round" opacity=".8"/>
+</svg><b>Нет результатов</b><span>По запросу &quot;{query.trim()}&quot; ничего не найдено.</span><small>Попробуйте другой запрос.</small></div>}</div>}
  {query.trim().length===0&&<div className="chat-list">{visible.map(chat=><button key={chat.id} className={`chat-row ${activeId===chat.id?"active":""}`} onClick={()=>{setActiveId(chat.id);setMobileChat(true);}}><Avatar chat={chat}/><span className="chat-copy"><span className="chat-title">{chat.name}{(chat.id==="topgram-notifications"||chat.handle.toLowerCase()==="@botfather")&&<BadgeCheck className="verified-label" size={14}/>}</span><span className="chat-preview">{chat.preview}</span></span><span className="chat-meta"><small>{chat.time}</small>{chat.unread&&<b>{chat.unread}</b>}</span></button>)}{visible.length===0&&<div className="empty-search">{user?"Здесь пока пусто. Создай первый чат.":"Ничего не найдено"}</div>}</div>}
  {query.trim().length===0&&mobileTab==="chats"&&!mobileChat&&<div className="tg-chat-fabs"><button aria-label="Новое сообщение" onClick={()=>{setActionError("");setContactSearch("");setModal("menu");}}><MessageCircle/><Plus className="tg-fab-plus"/></button></div>}
  {mobileTab==="profile"&&<section className="mobile-profile-screen">
