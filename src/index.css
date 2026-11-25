@@ -1797,3 +1797,17 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .tg-account-current,.tg-account-saved-row{min-height:72px!important;padding:10px 20px!important}
 .tg-account-dot{width:44px!important;height:44px!important;flex-basis:44px!important}
 .tg-account-logout{min-height:66px!important;margin:18px 0 8px!important;padding:16px 20px!important}
+
+/* Profile screen bug fix: hide chat/search layer, avoid bottom-nav overlap */
+@media(max-width:700px){
+ .sidebar.mobile-view-profile .side-header,.sidebar.mobile-view-profile .search-box,.sidebar.mobile-view-profile .filters,.sidebar.mobile-view-profile .chat-list,.sidebar.mobile-view-profile .tg-chat-fabs{display:none!important}
+ .sidebar.mobile-view-profile{display:flex!important;flex-direction:column!important;min-height:0!important}
+ .mobile-profile-screen{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain!important;padding:0 0 calc(120px + env(safe-area-inset-bottom))!important;box-sizing:border-box!important;background:#1f202e!important}
+ .tg-profile-identity{padding:16px 16px 20px!important}
+ .tg-profile-avatar-wrap,.tg-profile-identity .mobile-profile-avatar{width:100px!important;height:100px!important;max-width:100px!important;max-height:100px!important;flex:none!important;border-radius:50%!important;overflow:hidden!important}
+ .tg-profile-identity .mobile-profile-avatar img{width:100%!important;height:100%!important;object-fit:cover!important}
+ .tg-profile-actions{margin-top:18px!important;gap:8px!important}
+ .tg-profile-actions button{min-height:72px!important;border-radius:16px!important;font-size:13px!important}
+ .tg-profile-info-card{margin-bottom:16px!important}
+ .tg-profile-tabs{overflow-x:auto;justify-content:flex-start;gap:18px;padding:0 12px!important}
+}
