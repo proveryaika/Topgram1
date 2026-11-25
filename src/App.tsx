@@ -3,7 +3,7 @@ import type { FormEvent } from "react";
 import { Search, Plus, Send, Paperclip, Smile, MoreVertical, Phone, PhoneCall, Video, Volume2, ArrowLeft, ChevronRight, MessageCircle, Users, Bookmark, Settings, Star, Gift, Sun, Moon, Wallet, CheckCheck, X, Radio, LoaderCircle, ShieldCheck, BadgeCheck, Pencil, Check, Copy, Timer, LockKeyhole, KeyRound, Mail, Hand, MonitorSmartphone, UserPlus, Mic, StopCircle, Camera, AtSign, CalendarDays, Megaphone, Bot, LogOut, QrCode } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { activateSupabaseAccount, createSupabaseAccount, getActiveSupabaseStorageKey, isSupabaseConfigured, supabase } from "./lib/supabase";
-import topgramNotificationsAvatar from "../Неоновый логотип TopGram с короной.png";
+import topgramNotificationsAvatar from "../topgram-notifications-avatar.svg";
 
 type Kind = "direct" | "group" | "channel";
 type Chat = { id: string; name: string; handle: string; preview: string; time: string; unread?: number; color: string; online?: boolean; peerId?: string; kind: Kind; bio?: string | null; birthday?: string | null };
