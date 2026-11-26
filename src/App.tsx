@@ -103,7 +103,7 @@ export default function App() {
   const requestId=++workspaceLoadRef.current;
   const {data:members,error:memberError}=await db.from("tg_conversation_members").select("conversation_id, role").eq("user_id",current.id);
   if(requestId!==workspaceLoadRef.current||user?.id!==current.id)return;
-  if(memberError){console.error(memberError);return;}
+  if(memberError){console.error(memberError);setActionError("Не удалось загрузить список чатов. Данные не удалены — проверь соединение и попробуй обновить.");return;}
   const ids=(members??[]).map((m:{conversation_id:string})=>m.conversation_id);
   if(!ids.length){if(requestId!==workspaceLoadRef.current||user?.id!==current.id)return;setChats([]);setMessages([]);setActiveId("");return;}
   const [{data:conversations,error:convError},{data:allMembers,error:allMembersError},{data:blockedRows,error:blockedRowsError}]=await Promise.all([
@@ -112,7 +112,7 @@ export default function App() {
    db.from("tg_user_blocks").select("blocked_user_id").eq("blocker_id",current.id)
   ]);
   if(requestId!==workspaceLoadRef.current||user?.id!==current.id)return;
-  if(convError||allMembersError||blockedRowsError){console.error(convError??allMembersError??blockedRowsError);return;}
+  if(convError||allMembersError||blockedRowsError){const failure=convError??allMembersError??blockedRowsError;console.error(failure);setActionError("Не удалось загрузить сохранённые чаты. Данные не удалены; проверь соединение и обнови страницу.");return;}
   // Load newest messages per conversation in bounded batches, so active chats aren't
   // starved by a single account-wide limit.
   const allMessages: any[]=[];
@@ -122,12 +122,12 @@ export default function App() {
    const results=await Promise.all(batch.map(conversationId=>db.from("tg_messages").select("id,conversation_id,sender_id,body,created_at,attachment_path,attachment_name,attachment_type,attachment_size").eq("conversation_id",conversationId).order("created_at",{ascending:false}).limit(50)));
    if(requestId!==workspaceLoadRef.current||user?.id!==current.id)return;
    const failed=results.find(result=>result.error);
-   if(failed?.error){console.error(failed.error);return;}
+   if(failed?.error){console.error(failed.error);setActionError("Не удалось загрузить сообщения из базы. Переписки сохранены; попробуй обновить.");return;}
    results.forEach((result,index)=>{allMessages.push(...(result.data??[]));setOlderAvailable(prev=>({...prev,[batch[index]]:(result.data?.length??0)>=50}));});
   }
   const messageIds=allMessages.map((m:{id:string})=>m.id);
   const [{data:readRows,error:readRowsError},{data:myReadRows,error:myReadError}]=messageIds.length?await Promise.all([db.from("tg_message_reads").select("message_id,reader_id").in("message_id",messageIds),db.from("tg_message_reads").select("message_id").in("message_id",messageIds).eq("reader_id",current.id)]):[{data:[],error:null},{data:[],error:null}];
-  if(readRowsError||myReadError){console.error(readRowsError??myReadError);return;}
+  if(readRowsError||myReadError){console.error(readRowsError??myReadError);setActionError("Чаты загружены, но не удалось проверить отметки прочтения.");return;}
   const chronologicalMessages=[...(allMessages??[])].sort((a:any,b:any)=>new Date(a.created_at).getTime()-new Date(b.created_at).getTime());
   const readByOthers=new Set((readRows??[]).filter((r:{message_id:string;reader_id:string})=>r.reader_id!==current.id).map((r:{message_id:string})=>r.message_id));const readByMe=new Set((myReadRows??[]).map((r:{message_id:string})=>r.message_id));const unreadCounts=new Map<string,number>();chronologicalMessages.forEach((m:any)=>{if(m.sender_id!==current.id&&!readByMe.has(m.id))unreadCounts.set(m.conversation_id,(unreadCounts.get(m.conversation_id)??0)+1);});
   const blockedIds=new Set((blockedRows??[]).map((r:{blocked_user_id:string})=>r.blocked_user_id));
@@ -148,9 +148,9 @@ export default function App() {
   setChats(mapped.sort((a,b)=>new Date(b.lastActivity??0).getTime()-new Date(a.lastActivity??0).getTime()));setMessages(chronologicalMessages.map((m:{id:string;conversation_id:string;sender_id:string;body:string;created_at:string;attachment_path?:string|null;attachment_name?:string|null;attachment_type?:string|null;attachment_size?:number|null})=>({id:m.id,chatId:m.conversation_id,text:m.body,mine:m.sender_id===current.id,time:timeLabel(m.created_at),createdAt:m.created_at,read:readByOthers.has(m.id),attachmentPath:m.attachment_path??undefined,attachmentName:m.attachment_name??undefined,attachmentType:m.attachment_type??undefined,attachmentSize:m.attachment_size??undefined})));
   setActiveId(previous=>{let saved:string|null=null;try{saved=localStorage.getItem("topgram-active-chat-"+current.id);}catch{}if(saved&&mapped.some(c=>c.id===saved))return saved;if(mapped.some(c=>c.id===previous))return previous;return mapped[0]?.id??"";});
   setProfileName(current.user_metadata?.display_name??"Пользователь");
-  const {data:ownProfile}=await db.from("tg_profiles").select("username,display_name,bio,tg_id,first_name,last_name,birthday").eq("id",current.id).maybeSingle();
+  const {data:ownProfile,error:ownProfileError}=await db.from("tg_profiles").select("username,display_name,bio,tg_id,first_name,last_name,birthday").eq("id",current.id).maybeSingle();
   if(requestId!==workspaceLoadRef.current||user?.id!==current.id)return;
-  if(ownProfile){setProfileUsername(ownProfile.username??"");setProfileName(ownProfile.display_name??"Пользователь");setProfileBio(ownProfile.bio??"");setTopgramId(ownProfile.tg_id??"");const parts=(ownProfile.display_name??"").trim().split(/\s+/);setFirstName(ownProfile.first_name??parts.shift()??"");setLastName(ownProfile.last_name??parts.join(" "));setBirthday(ownProfile.birthday??"");}
+  if(ownProfileError){console.error(ownProfileError);setActionError("Чаты восстановлены, но профиль не удалось загрузить.");}if(ownProfile){setProfileUsername(ownProfile.username??"");setProfileName(ownProfile.display_name??"Пользователь");setProfileBio(ownProfile.bio??"");setTopgramId(ownProfile.tg_id??"");const parts=(ownProfile.display_name??"").trim().split(/\s+/);setFirstName(ownProfile.first_name??parts.shift()??"");setLastName(ownProfile.last_name??parts.join(" "));setBirthday(ownProfile.birthday??"");}
  }
  useEffect(()=>{if(!user){workspaceLoadRef.current++;setChats([]);setMessages([]);setActiveId("");return;}void loadWorkspace(user);},[user]);
  useEffect(()=>{if(!user||!activeId||!chats.some(chat=>chat.id===activeId))return;try{localStorage.setItem("topgram-active-chat-"+user.id,activeId);}catch{}},[user,activeId,chats]);
