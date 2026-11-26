@@ -1969,3 +1969,5 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .tg-gift-preview-large:before{display:none!important}
 .tg-gift-preview-large svg{filter:none!important}
 .gift-inventory-art-svg{background:transparent!important;filter:none!important}
+
+.message-delete-button{border:0;background:transparent;color:inherit;opacity:.45;cursor:pointer;padding:2px;margin-left:3px;vertical-align:middle;display:inline-flex;align-items:center}.message-delete-button:hover{opacity:1;color:#d44}
