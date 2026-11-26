@@ -1954,3 +1954,18 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .gift-inventory-art-svg{width:64px;height:64px;flex:none;border-radius:14px;background:radial-gradient(circle at 50% 40%,#435f79,#1c2d3e);padding:4px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.2))}
 .gift-market-tile-art{overflow:hidden}
 .gift-market-tile-art svg{transform:translateY(1px)}
+
+/* Requested: ordinary gifts have no colored artwork backdrop */
+.gift-market-tile-art,
+.gift-market-tile:nth-child(6n+1) .gift-market-tile-art,
+.gift-market-tile:nth-child(6n+2) .gift-market-tile-art,
+.gift-market-tile:nth-child(6n+3) .gift-market-tile-art,
+.gift-market-tile:nth-child(6n+4) .gift-market-tile-art,
+.gift-market-tile:nth-child(6n+5) .gift-market-tile-art,
+.gift-market-tile:nth-child(6n+6) .gift-market-tile-art{background:transparent!important}
+.gift-market-tile-art:after{display:none!important}
+.gift-market-tile-art svg{filter:none!important}
+.tg-gift-preview-large{background:transparent!important;box-shadow:none!important}
+.tg-gift-preview-large:before{display:none!important}
+.tg-gift-preview-large svg{filter:none!important}
+.gift-inventory-art-svg{background:transparent!important;filter:none!important}
