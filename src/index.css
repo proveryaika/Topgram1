@@ -1971,3 +1971,5 @@ html[data-theme="light"] .settings-info-row{color:#18222d}
 .gift-inventory-art-svg{background:transparent!important;filter:none!important}
 
 .message-delete-button{border:0;background:transparent;color:inherit;opacity:.45;cursor:pointer;padding:2px;margin-left:3px;vertical-align:middle;display:inline-flex;align-items:center}.message-delete-button:hover{opacity:1;color:#d44}
+
+.message-edit-form{display:flex;flex-direction:column;gap:6px;min-width:170px}.message-edit-form textarea{width:100%;min-height:54px;resize:vertical;font:inherit;padding:6px;border-radius:8px;border:1px solid currentColor;background:transparent}.message-edit-form button{align-self:flex-end;padding:3px 8px;border-radius:6px;cursor:pointer}
