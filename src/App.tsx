@@ -119,6 +119,7 @@ export default function App() {
   for(let offset=0;offset<conversationIds.length;offset+=8){
    const batch=conversationIds.slice(offset,offset+8);
    const results=await Promise.all(batch.map(conversationId=>db.from("tg_messages").select("id,conversation_id,sender_id,body,created_at,attachment_path,attachment_name,attachment_type,attachment_size").eq("conversation_id",conversationId).order("created_at",{ascending:false}).limit(50)));
+   if(requestId!==workspaceLoadRef.current||user?.id!==current.id)return;
    const failed=results.find(result=>result.error);
    if(failed?.error){console.error(failed.error);return;}
    results.forEach(result=>allMessages.push(...(result.data??[])));
@@ -147,6 +148,7 @@ export default function App() {
   setActiveId(previous=>mapped.some(c=>c.id===previous)?previous:(mapped[0]?.id??""));
   setProfileName(current.user_metadata?.display_name??"Пользователь");
   const {data:ownProfile}=await db.from("tg_profiles").select("username,display_name,bio,tg_id,first_name,last_name,birthday").eq("id",current.id).maybeSingle();
+  if(requestId!==workspaceLoadRef.current||user?.id!==current.id)return;
   if(ownProfile){setProfileUsername(ownProfile.username??"");setProfileName(ownProfile.display_name??"Пользователь");setProfileBio(ownProfile.bio??"");setTopgramId(ownProfile.tg_id??"");const parts=(ownProfile.display_name??"").trim().split(/\s+/);setFirstName(ownProfile.first_name??parts.shift()??"");setLastName(ownProfile.last_name??parts.join(" "));setBirthday(ownProfile.birthday??"");}
  }
  useEffect(()=>{if(!supabase||!user)return;const params=new URLSearchParams(window.location.search);const token=params.get("invite");const username=params.get("channel");if(!token&&!username)return;let alive=true;const joining=token?supabase.rpc("tg_join_channel_by_invite",{p_token:token}):supabase.rpc("tg_join_public_channel",{p_username:username});joining.then(async({data,error})=>{if(!alive)return;if(error){setActionError(error.message);return;}await loadWorkspace(user);if(typeof data==="string"){setActiveId(data);setMobileTab("chats");setMobileChat(true);}window.history.replaceState({},"",window.location.pathname);});return()=>{alive=false;};},[user]);
